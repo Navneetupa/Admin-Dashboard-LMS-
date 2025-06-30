@@ -92,10 +92,6 @@ function GeneralInfo({ state, dispatch, onPreview }) {
         learningOutcomes: state.learningOutcomes.filter((item) => item.trim() !== ''),
       };
 
-      // console.log('Sending to:', `${API_URL}/api/v1/admin/courses`);
-      // console.log('Payload:', payload);
-      // console.log('Token:', token);
-
       const response = await axios.post(`${API_URL}/api/v1/admin/courses`, payload, {
         headers: {
           'Content-Type': 'application/json',
@@ -123,10 +119,10 @@ function GeneralInfo({ state, dispatch, onPreview }) {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6 md:space-y-8 mt-10 sm:mt-6">
+    <div className="space-y-4 sm:space-y-6 md:space-y-8 mt-10 sm:mt-6 bg-gray-900 min-h-screen p-4 sm:p-6 text-gray-200">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div>
-          <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Course Title
           </label>
           <input
@@ -135,11 +131,11 @@ function GeneralInfo({ state, dispatch, onPreview }) {
             onChange={(e) => setField('title', e.target.value)}
             placeholder="e.g., React"
             aria-label="Course title"
-            className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+            className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200 placeholder-gray-400"
           />
         </div>
         <div>
-          <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Course Subtitle
           </label>
           <input
@@ -148,13 +144,13 @@ function GeneralInfo({ state, dispatch, onPreview }) {
             onChange={(e) => setField('subtitle', e.target.value)}
             placeholder="e.g., Build complex applications with React"
             aria-label="Course subtitle"
-            className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+            className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200 placeholder-gray-400"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
           Course Description
         </label>
         <textarea
@@ -163,13 +159,13 @@ function GeneralInfo({ state, dispatch, onPreview }) {
           placeholder="e.g., Learn advanced React patterns and techniques"
           rows={4}
           aria-label="Course description"
-          className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm resize-none focus:ring-2 focus:ring-teal-600 outline-none"
+          className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm resize-none focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200 placeholder-gray-400"
         />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div>
-          <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Category
           </label>
           <input
@@ -178,11 +174,11 @@ function GeneralInfo({ state, dispatch, onPreview }) {
             onChange={(e) => setField('category', e.target.value)}
             placeholder="e.g., Web Development"
             aria-label="Course category"
-            className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+            className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200 placeholder-gray-400"
           />
         </div>
         <div>
-          <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Subcategory
           </label>
           <input
@@ -191,23 +187,23 @@ function GeneralInfo({ state, dispatch, onPreview }) {
             onChange={(e) => setField('subCategory', e.target.value)}
             placeholder="e.g., React"
             aria-label="Course subcategory"
-            className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+            className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200 placeholder-gray-400"
           />
         </div>
         <div>
-          <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Instructor
           </label>
           {instructorLoading ? (
-            <p className="text-xs sm:text-sm text-gray-600">Loading instructors...</p>
+            <p className="text-xs sm:text-sm text-gray-400">Loading instructors...</p>
           ) : instructorError ? (
-            <p className="text-xs sm:text-sm text-red-600">{instructorError}</p>
+            <p className="text-xs sm:text-sm text-red-400">{instructorError}</p>
           ) : (
             <select
               value={state.instructorId}
               onChange={(e) => setField('instructorId', e.target.value)}
               aria-label="Select Instructor"
-              className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+              className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200"
             >
               <option value="">Select Instructor</option>
               {instructors.map((instructor) => (
@@ -222,14 +218,14 @@ function GeneralInfo({ state, dispatch, onPreview }) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div>
-          <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Language
           </label>
           <select
             value={state.language}
             onChange={(e) => setField('language', e.target.value)}
             aria-label="Course language"
-            className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+            className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200"
           >
             <option value="">Select Language</option>
             <option value="English">English</option>
@@ -238,14 +234,14 @@ function GeneralInfo({ state, dispatch, onPreview }) {
           </select>
         </div>
         <div>
-          <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Level
           </label>
           <select
             value={state.level}
             onChange={(e) => setField('level', e.target.value)}
             aria-label="Course level"
-            className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+            className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200"
           >
             <option value="">Select Level</option>
             <option value="beginner">Beginner</option>
@@ -257,7 +253,7 @@ function GeneralInfo({ state, dispatch, onPreview }) {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
         <div>
-          <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Duration (hrs)
           </label>
           <input
@@ -268,11 +264,11 @@ function GeneralInfo({ state, dispatch, onPreview }) {
             step={0.1}
             placeholder="e.g., 15"
             aria-label="Course duration"
-            className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+            className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200 placeholder-gray-400"
           />
         </div>
         <div>
-          <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Price (₹)
           </label>
           <input
@@ -283,11 +279,11 @@ function GeneralInfo({ state, dispatch, onPreview }) {
             step={0.01}
             placeholder="e.g., 129.99"
             aria-label="Course price"
-            className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+            className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200 placeholder-gray-400"
           />
         </div>
         <div>
-          <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Discount Price (₹)
           </label>
           <input
@@ -298,13 +294,13 @@ function GeneralInfo({ state, dispatch, onPreview }) {
             step={0.01}
             placeholder="e.g., 99.99"
             aria-label="Course discount price"
-            className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+            className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200 placeholder-gray-400"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
           Prerequisites
         </label>
         {state.prerequisites.map((item, index) => (
@@ -315,11 +311,11 @@ function GeneralInfo({ state, dispatch, onPreview }) {
               onChange={(e) => dispatch({ type: 'SET_PREREQUISITE', index, value: e.target.value })}
               placeholder="e.g., Basic JavaScript"
               aria-label={`Prerequisite ${index + 1}`}
-              className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+              className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200 placeholder-gray-400"
             />
             <button
               onClick={() => dispatch({ type: 'REMOVE_PREREQUISITE', index })}
-              className="ml-2 text-red-600 hover:text-red-800 text-xs sm:text-sm"
+              className="ml-2 text-red-400 hover:text-red-300 text-xs sm:text-sm"
               aria-label={`Remove prerequisite ${index + 1}`}
             >
               Remove
@@ -328,7 +324,7 @@ function GeneralInfo({ state, dispatch, onPreview }) {
         ))}
         <button
           onClick={() => dispatch({ type: 'ADD_PREREQUISITE' })}
-          className="text-teal-600 hover:text-teal-800 text-xs sm:text-sm"
+          className="text-cyan-400 hover:text-cyan-300 text-xs sm:text-sm"
           aria-label="Add new prerequisite"
         >
           + Add Prerequisite
@@ -336,7 +332,7 @@ function GeneralInfo({ state, dispatch, onPreview }) {
       </div>
 
       <div>
-        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
           Learning Outcomes
         </label>
         {state.learningOutcomes.map((item, index) => (
@@ -349,11 +345,11 @@ function GeneralInfo({ state, dispatch, onPreview }) {
               }
               placeholder="e.g., Build scalable React apps"
               aria-label={`Learning Outcome ${index + 1}`}
-              className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 outline-none"
+              className="w-full border border-gray-600 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:ring-2 focus:ring-cyan-400 outline-none bg-gray-700 text-gray-200 placeholder-gray-400"
             />
             <button
               onClick={() => dispatch({ type: 'REMOVE_LEARNING_OUTCOME', index })}
-              className="ml-2 text-red-600 hover:text-red-800 text-xs sm:text-sm"
+              className="ml-2 text-red-400 hover:text-red-300 text-xs sm:text-sm"
               aria-label={`Remove learning outcome ${index + 1}`}
             >
               Remove
@@ -362,7 +358,7 @@ function GeneralInfo({ state, dispatch, onPreview }) {
         ))}
         <button
           onClick={() => dispatch({ type: 'ADD_LEARNING_OUTCOME' })}
-          className="text-teal-600 hover:text-teal-800 text-xs sm:text-sm"
+          className="text-cyan-400 hover:text-cyan-300 text-xs sm:text-sm"
           aria-label="Add new learning outcome"
         >
           + Add Learning Outcome
@@ -374,14 +370,14 @@ function GeneralInfo({ state, dispatch, onPreview }) {
           onClick={handleSave}
           disabled={loading || instructorLoading}
           aria-label={loading ? 'Saving course' : 'Save course'}
-          className="bg-teal-600 shadow shadow-black text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-md hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm"
+          className="bg-cyan-600 shadow shadow-black text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-md hover:bg-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm border border-cyan-500"
         >
           {loading ? 'Saving...' : 'Save'}
         </button>
         <button
           onClick={onPreview}
           aria-label="Preview course"
-          className="border shadow shadow-black border-teal-600 text-teal-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-md hover:bg-teal-50 text-xs sm:text-sm"
+          className="border shadow shadow-black border-cyan-500 text-cyan-400 px-3 sm:px-4 py-1.5 sm:py-2 rounded-md hover:bg-cyan-900 text-xs sm:text-sm"
         >
           Preview
         </button>
@@ -390,7 +386,7 @@ function GeneralInfo({ state, dispatch, onPreview }) {
       {(message || instructorError) && (
         <p
           className={`mt-3 sm:mt-4 text-xs sm:text-sm ${
-            message.includes('successfully') ? 'text-green-600' : 'text-red-600'
+            message.includes('successfully') ? 'text-green-400' : 'text-red-400'
           }`}
         >
           {message || instructorError}

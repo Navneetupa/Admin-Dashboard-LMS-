@@ -9,14 +9,14 @@ const Notification = ({ message, type, onClose }) => {
   return (
     <div
       className={`fixed top-4 right-4 p-4 rounded-lg shadow-2xl text-white ${
-        type === "error" ? "bg-red-600" : "bg-green-600"
+        type === "error" ? "bg-red-800" : "bg-green-800"
       } transition-opacity duration-300 z-[1000] max-w-[90%] sm:max-w-md animate-fade-in`}
     >
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium">{message}</span>
         <button
           onClick={onClose}
-          className="ml-4 text-white hover:text-gray-200 transition"
+          className="ml-4 text-gray-200 hover:text-gray-400 transition"
           aria-label="Close notification"
         >
           ✕
@@ -41,9 +41,9 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-6">
-          <h1 className="text-2xl font-bold text-red-600">Something went wrong.</h1>
-          <p className="text-base text-gray-600 mt-2">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-6">
+          <h1 className="text-2xl font-bold text-red-400">Something went wrong.</h1>
+          <p className="text-base text-gray-400 mt-2">
             {this.state.error?.message || "Please try again later."}
           </p>
         </div>
@@ -290,44 +290,44 @@ const CourseManagement = () => {
 
   return (
     <ErrorBoundary>
-      <div className="bg-gray-50 py-6 px-4 sm:px-6 md:px-8 lg:px-12">
+      <div className="bg-gray-900 py-6 px-4 sm:px-6 md:px-8 lg:px-12 min-h-screen">
         <Notification
           message={notification.message}
           type={notification.type}
           onClose={() => setNotification({ message: "", type: "" })}
         />
         <div className="max-w-7xl mx-auto sm:w-full">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center sm:text-left">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-200 mb-6 text-center sm:text-left">
             Manage Your Course
           </h1>
 
-          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6">
+          <div className="bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 mb-6 border border-gray-700">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between">
               <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-center sm:text-left">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-200">
                   {courseDetails.title || "Untitled Course"}
                 </h2>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-400">
                   (Status: {status.charAt(0).toUpperCase() + status.slice(1)})
                 </span>
               </div>
               <div className="flex flex-wrap justify-center sm:justify-end gap-3 mt-4 sm:mt-0">
                 <button
                   onClick={() => setIsTitleModalOpen(true)}
-                  className="py-2 px-4 rounded-lg bg-gray-200 text-gray-800 text-sm font-medium hover:bg-gray-300 transition"
+                  className="py-2 px-4 rounded-lg bg-gray-600 text-gray-200 text-sm font-medium hover:bg-gray-500 transition"
                 >
                   Edit Details
                 </button>
                 <button
                   onClick={() => setIsDeleteModalOpen(true)}
-                  className="py-2 px-4 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-700 transition"
+                  className="py-2 px-4 rounded-lg bg-red-800 text-white text-sm font-medium hover:bg-red-700 transition"
                 >
                   Delete Course
                 </button>
                 <select
                   value={status}
                   onChange={handleStatusChange}
-                  className="py-2 px-4 rounded-lg bg-[#49BBBD] text-white text-sm font-medium hover:bg-[#3a9a9b] transition focus:ring-2 focus:ring-[#49BBBD] focus:outline-none"
+                  className="py-2 px-4 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-700 transition focus:ring-2 focus:ring-cyan-400 focus:outline-none border border-cyan-500"
                 >
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
@@ -338,20 +338,20 @@ const CourseManagement = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Upload Thumbnail</h3>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-200 mb-4">Upload Thumbnail</h3>
+              <label className="block text-sm font-medium text-gray-400 mb-2">
                 Choose Thumbnail
               </label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleThumbnailChange}
-                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#49BBBD] file:text-white hover:file:bg-[#3a9a9b]"
+                className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-cyan-600 file:text-white hover:file:bg-cyan-700"
               />
               {thumbnailPreview && (
                 <div className="mt-4">
-                  <p className="text-sm text-gray-600 mb-2">Thumbnail Preview:</p>
+                  <p className="text-sm text-gray-400 mb-2">Thumbnail Preview:</p>
                   <img
                     src={thumbnailPreview}
                     alt="Thumbnail Preview"
@@ -363,25 +363,25 @@ const CourseManagement = () => {
               <button
                 onClick={handleThumbnailUpload}
                 disabled={!thumbnailFile}
-                className="mt-4 py-2 px-4 rounded-lg bg-[#49BBBD] text-white text-sm font-medium hover:bg-[#3a9a9b] disabled:bg-gray-400 disabled:cursor-not-allowed transition w-full sm:w-auto"
+                className="mt-4 py-2 px-4 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition w-full sm:w-auto border border-cyan-500"
               >
                 Upload Thumbnail
               </button>
             </div>
-            {/* <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Upload Promo Video</h3>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+            {/* <div className="bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-200 mb-4">Upload Promo Video</h3>
+              <label className="block text-sm font-medium text-gray-400 mb-2">
                 Choose Promo Video
               </label>
               <input
                 type="file"
                 accept="video/*"
                 onChange={handlePromoVideoChange}
-                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#49BBBD] file:text-white hover:file:bg-[#3a9a9b]"
+                className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-cyan-600 file:text-white hover:file:bg-cyan-700"
               />
               {promoVideoPreview && (
                 <div className="mt-4">
-                  <p className="text-sm text-gray-600 mb-2">Promo Video Preview:</p>
+                  <p className="text-sm text-gray-400 mb-2">Promo Video Preview:</p>
                   <video
                     src={promoVideoPreview}
                     controls
@@ -393,7 +393,7 @@ const CourseManagement = () => {
               <button
                 onClick={handlePromoVideoUpload}
                 disabled={!promoVideoFile}
-                className="mt-4 py-2 px-4 rounded-lg bg-[#49BBBD] text-white text-sm font-medium hover:bg-[#3a9a9b] disabled:bg-gray-400 disabled:cursor-not-allowed transition w-full sm:w-auto"
+                className="mt-4 py-2 px-4 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition w-full sm:w-auto border border-cyan-500"
               >
                 Upload Promo Video
               </button>
@@ -402,15 +402,15 @@ const CourseManagement = () => {
 
           {isTitleModalOpen && (
             <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-              <div className="bg-white rounded-lg shadow-xl w-[90%] max-w-lg p-4 sm:p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Edit Course Details</h3>
+              <div className="bg-gray-800 rounded-lg shadow-xl w-[90%] max-w-lg p-4 sm:p-6 border border-gray-700">
+                <h3 className="text-xl font-semibold text-gray-200 mb-4">Edit Course Details</h3>
                 <div className="space-y-4 overflow-y-auto max-h-[70vh]">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-400 mb-1">
                       Course Title
                     </label>
                     <input
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#49BBBD] focus:border-transparent outline-none transition"
+                      className="w-full border border-gray-600 rounded-lg p-3 text-sm focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition bg-gray-700 text-gray-200 placeholder-gray-400"
                       placeholder="Enter Course Title"
                       value={courseDetails.title}
                       onChange={(e) =>
@@ -419,11 +419,11 @@ const CourseManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-400 mb-1">
                       Subtitle
                     </label>
                     <input
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#49BBBD] focus:border-transparent outline-none transition"
+                      className="w-full border border-gray-600 rounded-lg p-3 text-sm focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition bg-gray-700 text-gray-200 placeholder-gray-400"
                       placeholder="Enter Subtitle"
                       value={courseDetails.subtitle}
                       onChange={(e) =>
@@ -432,11 +432,11 @@ const CourseManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-400 mb-1">
                       Description
                     </label>
                     <textarea
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#49BBBD] focus:border-transparent outline-none transition"
+                      className="w-full border border-gray-600 rounded-lg p-3 text-sm focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition bg-gray-700 text-gray-200 placeholder-gray-400"
                       placeholder="Enter Description"
                       rows="4"
                       value={courseDetails.description}
@@ -446,11 +446,11 @@ const CourseManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-400 mb-1">
                       Category
                     </label>
                     <input
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#49BBBD] focus:border-transparent outline-none transition"
+                      className="w-full border border-gray-600 rounded-lg p-3 text-sm focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition bg-gray-700 text-gray-200 placeholder-gray-400"
                       placeholder="Enter Category"
                       value={courseDetails.category}
                       onChange={(e) =>
@@ -459,11 +459,11 @@ const CourseManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-400 mb-1">
                       Subcategory
                     </label>
                     <input
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#49BBBD] focus:border-transparent outline-none transition"
+                      className="w-full border border-gray-600 rounded-lg p-3 text-sm focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition bg-gray-700 text-gray-200 placeholder-gray-400"
                       placeholder="Enter Subcategory"
                       value={courseDetails.subCategory}
                       onChange={(e) =>
@@ -472,11 +472,11 @@ const CourseManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-400 mb-1">
                       Level
                     </label>
                     <select
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#49BBBD] focus:border-transparent outline-none transition"
+                      className="w-full border border-gray-600 rounded-lg p-3 text-sm focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition bg-gray-700 text-gray-200"
                       value={courseDetails.level}
                       onChange={(e) =>
                         setCourseDetails({ ...courseDetails, level: e.target.value })
@@ -493,13 +493,13 @@ const CourseManagement = () => {
                   <button
                     onClick={handleUpdateCourseDetails}
                     disabled={!courseDetails.title.trim()}
-                    className="py-2 px-4 rounded-lg bg-[#49BBBD] text-white text-sm font-medium hover:bg-[#3a9a9b] disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+                    className="py-2 px-4 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition border border-cyan-500"
                   >
                     Update
                   </button>
                   <button
                     onClick={() => setIsTitleModalOpen(false)}
-                    className="py-2 px-4 rounded-lg bg-gray-200 text-gray-800 text-sm font-medium hover:bg-gray-300 transition"
+                    className="py-2 px-4 rounded-lg bg-gray-600 text-gray-200 text-sm font-medium hover:bg-gray-500 transition"
                   >
                     Cancel
                   </button>
@@ -510,21 +510,21 @@ const CourseManagement = () => {
 
           {isDeleteModalOpen && (
             <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-              <div className="bg-white rounded-lg shadow-xl w-[90%] max-w-md p-4 sm:p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Confirm Delete Course</h3>
-                <p className="text-sm text-gray-600 mb-6">
+              <div className="bg-gray-800 rounded-lg shadow-xl w-[90%] max-w-md p-4 sm:p-6 border border-gray-700">
+                <h3 className="text-xl font-semibold text-gray-200 mb-4">Confirm Delete Course</h3>
+                <p className="text-sm text-gray-400 mb-6">
                   Are you sure you want to delete this course? This action cannot be undone.
                 </p>
                 <div className="flex justify-end gap-3">
                   <button
                     onClick={handleDeleteCourse}
-                    className="py-2 px-4 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-700 transition"
+                    className="py-2 px-4 rounded-lg bg-red-800 text-white text-sm font-medium hover:bg-red-700 transition"
                   >
                     Delete
                   </button>
                   <button
                     onClick={() => setIsDeleteModalOpen(false)}
-                    className="py-2 px-4 rounded-lg bg-gray-200 text-gray-800 text-sm font-medium hover:bg-gray-300 transition"
+                    className="py-2 px-4 rounded-lg bg-gray-600 text-gray-200 text-sm font-medium hover:bg-gray-500 transition"
                   >
                     Cancel
                   </button>
@@ -533,10 +533,9 @@ const CourseManagement = () => {
             </div>
           )}
         </div>
-        </div>
-
-      </ErrorBoundary>
-    );
+      </div>
+    </ErrorBoundary>
+  );
 };
 
 export default CourseManagement;

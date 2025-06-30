@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "../AuthContext"; // Adjust path as per your project structure
+import { useAuth } from "../AuthContext";
 import Loading from "./Loading";
 import { FaUser, FaEnvelope, FaPhone, FaCode, FaCheckCircle, FaBook, FaImage, FaInfoCircle, FaLink, FaUserTag, FaShieldAlt, FaStar, FaUsers, FaDollarSign, FaCheck, FaCalendarAlt, FaSignInAlt, FaCog } from "react-icons/fa";
 
@@ -28,13 +28,12 @@ const ManageInstructor = () => {
     earnings: 0,
     approved: false,
   });
-  const [error, setError] = useState(""); // General errors
-  const [modalError, setModalError] = useState(""); // Modal-specific errors
+  const [error, setError] = useState("");
+  const [modalError, setModalError] = useState("");
   const [loading, setLoading] = useState(true);
   const [toggleLoading, setToggleLoading] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Fetch instructors on component mount
   useEffect(() => {
     const fetchInstructors = async () => {
       try {
@@ -83,7 +82,7 @@ const ManageInstructor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setModalError(""); // Clear previous modal errors
+    setModalError("");
 
     if (!formData.password || formData.password.length < 6) {
       setModalError("Password is required and must be at least 6 characters long");
@@ -142,7 +141,7 @@ const ManageInstructor = () => {
           approved: false,
         });
         setSearchQuery("");
-        setModalError(""); // Clear modal error on success
+        setModalError("");
       } else {
         setModalError("Failed to enroll instructor: Invalid response data");
       }
@@ -203,7 +202,7 @@ const ManageInstructor = () => {
       setIsModalOpen(false);
       setSelectedInstructor(null);
       setError("");
-      setModalError(""); // Clear modal error on close
+      setModalError("");
       setSearchQuery("");
     }
   };
@@ -221,15 +220,15 @@ const ManageInstructor = () => {
   });
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 bg-gray-50 min-h-screen">
+    <div className="container mx-auto p-4 sm:p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
       <div className="mb-6 mt-10">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <h1 className="text-xl sm:text-3xl font-bold text-gray-800 text-left">
+          <h1 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-white text-left">
             Manage Instructors
           </h1>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="card-bg text-white shadow shadow-black px-4 py-2 rounded-lg hover:card-bg transition-colors text-sm"
+            className="bg-blue-600 dark:bg-blue-700 text-white shadow shadow-black/30 dark:shadow-black/50 px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-sm"
           >
             Enroll Instructor
           </button>
@@ -241,12 +240,12 @@ const ManageInstructor = () => {
               placeholder="Search by name or email"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
               >
                 ✕
               </button>
@@ -255,40 +254,37 @@ const ManageInstructor = () => {
         </div>
       </div>
 
-      {/* Error Message */}
       {error && (
-        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
+        <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg text-sm">
           {error}
         </div>
       )}
 
-      {/* Loading State */}
       {loading ? (
         <Loading />
       ) : filteredInstructors.length === 0 ? (
-        <div className="text-center text-gray-600">
+        <div className="text-center text-gray-600 dark:text-gray-400">
           {searchQuery ? "No instructors found matching your search." : "No instructors found."}
         </div>
       ) : (
         <>
-          {/* Enroll Modal */}
           {isModalOpen && (
             <div
-              className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50"
+              className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 bg-black/30 dark:bg-black/50"
               onClick={handleOverlayClick}
             >
-              <div className="bg-white border-2 border-blue-400 rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto">
-                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800">
+              <div className="bg-white dark:bg-gray-800 border-2 border-blue-400 dark:border-blue-600 rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto">
+                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800 dark:text-white">
                   Enroll New Instructor
                 </h2>
                 {modalError && (
-                  <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
+                  <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg text-sm">
                     {modalError}
                   </div>
                 )}
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       First Name
                     </label>
                     <input
@@ -296,12 +292,12 @@ const ManageInstructor = () => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       required
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Last Name
                     </label>
                     <input
@@ -309,12 +305,12 @@ const ManageInstructor = () => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       required
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Email
                     </label>
                     <input
@@ -322,12 +318,12 @@ const ManageInstructor = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       required
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Password
                     </label>
                     <input
@@ -335,13 +331,13 @@ const ManageInstructor = () => {
                       name="password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       required
                       placeholder="Enter password (min 6 characters)"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Phone
                     </label>
                     <input
@@ -349,11 +345,11 @@ const ManageInstructor = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Avatar URL
                     </label>
                     <input
@@ -361,12 +357,12 @@ const ManageInstructor = () => {
                       name="avatar"
                       value={formData.avatar}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="Optional image URL"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Expertise (comma-separated)
                     </label>
                     <input
@@ -374,24 +370,24 @@ const ManageInstructor = () => {
                       name="expertise"
                       value={formData.expertise}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="e.g., JavaScript, React"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Bio
                     </label>
                     <textarea
                       name="bio"
                       value={formData.bio}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       rows="3"
                     ></textarea>
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       LinkedIn URL
                     </label>
                     <input
@@ -399,12 +395,12 @@ const ManageInstructor = () => {
                       name="socialLinks.linkedin"
                       value={formData.socialLinks.linkedin}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="Optional"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Twitter URL
                     </label>
                     <input
@@ -412,19 +408,19 @@ const ManageInstructor = () => {
                       name="socialLinks.twitter"
                       value={formData.socialLinks.twitter}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="Optional"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Active Status
                     </label>
                     <select
                       name="isActive"
                       value={formData.isActive}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     >
                       <option value={true}>Active</option>
                       <option value={false}>Inactive</option>
@@ -434,13 +430,13 @@ const ManageInstructor = () => {
                     <button
                       type="button"
                       onClick={() => setIsModalOpen(false)}
-                      className="px-4 py-2 text-gray-600 hover:text-gray-800 text-sm"
+                      className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white text-sm"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 card-bg text-white rounded-lg hover:card-bg transition-colors text-sm"
+                      className="px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-sm"
                     >
                       Enroll
                     </button>
@@ -450,35 +446,34 @@ const ManageInstructor = () => {
             </div>
           )}
 
-          {/* Details Popup */}
           {selectedInstructor && (
             <div
-              className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50"
+              className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 bg-black/30 dark:bg-black/50"
               onClick={handleOverlayClick}
             >
-              <div className="bg-white border-2 border-blue-400 rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto">
-                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800">
+              <div className="bg-white dark:bg-gray-800 border-2 border-blue-400 dark:border-blue-600 rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto">
+                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800 dark:text-white">
                   {`${selectedInstructor.firstName || "N/A"} ${selectedInstructor.lastName || "N/A"}`} Details
                 </h2>
-                <div className="space-y-2 text-sm text-gray-600">
+                <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <div className="flex items-center gap-2">
-                    <FaUser className="clr text-sm" />
+                    <FaUser className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>First Name:</strong> {selectedInstructor.firstName || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaUser className="clr text-sm" />
+                    <FaUser className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Last Name:</strong> {selectedInstructor.lastName || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaEnvelope className="clr text-sm" />
+                    <FaEnvelope className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Email:</strong> {selectedInstructor.email || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaPhone className="clr text-sm" />
+                    <FaPhone className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Phone:</strong> {selectedInstructor.phone || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaImage className="clr text-sm" />
+                    <FaImage className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p>
                       <strong>Avatar:</strong>{" "}
                       {selectedInstructor.avatar ? (
@@ -498,22 +493,22 @@ const ManageInstructor = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCode className="clr text-sm" />
+                    <FaCode className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p>
                       <strong>Expertise:</strong>{" "}
                       {selectedInstructor.expertise?.join(", ") || "N/A"}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaBook className="clr text-sm" />
+                    <FaBook className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Total Courses:</strong> {selectedInstructor.totalCourses || 0}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaInfoCircle className="clr text-sm" />
+                    <FaInfoCircle className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Bio:</strong> {selectedInstructor.bio || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaLink className="clr text-sm" />
+                    <FaLink className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p>
                       <strong>Social:</strong>{" "}
                       {selectedInstructor.socialLinks && (selectedInstructor.socialLinks.linkedin || selectedInstructor.socialLinks.twitter) ? (
@@ -545,14 +540,14 @@ const ManageInstructor = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCheckCircle className="clr text-sm" />
+                    <FaCheckCircle className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p>
                       <strong>Status:</strong>{" "}
                       <span
                         className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                           selectedInstructor.isActive
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
+                            ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
+                            : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
                         }`}
                       >
                         {selectedInstructor.isActive ? "Active" : "Inactive"}
@@ -560,31 +555,31 @@ const ManageInstructor = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaUserTag className="clr text-sm" />
+                    <FaUserTag className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Role:</strong> {selectedInstructor.role || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaShieldAlt className="clr text-sm" />
+                    <FaShieldAlt className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Verified:</strong> {selectedInstructor.isVerified ? "Yes" : "No"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaStar className="clr text-sm" />
+                    <FaStar className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Rating:</strong> {selectedInstructor.rating || 0}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaUsers className="clr text-sm" />
+                    <FaUsers className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Total Students:</strong> {selectedInstructor.totalStudents || 0}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaDollarSign className="clr text-sm" />
+                    <FaDollarSign className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Earnings:</strong> ${selectedInstructor.earnings || 0}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCheck className="clr text-sm" />
+                    <FaCheck className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p><strong>Approved:</strong> {selectedInstructor.approved ? "Yes" : "No"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCalendarAlt className="clr text-sm" />
+                    <FaCalendarAlt className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p>
                       <strong>Created At:</strong>{" "}
                       {selectedInstructor.createdAt
@@ -593,7 +588,7 @@ const ManageInstructor = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCalendarAlt className="clr text-sm" />
+                    <FaCalendarAlt className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p>
                       <strong>Updated At:</strong>{" "}
                       {selectedInstructor.updatedAt
@@ -602,7 +597,7 @@ const ManageInstructor = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaSignInAlt className="clr text-sm" />
+                    <FaSignInAlt className="text-blue-600 dark:text-blue-400 text-sm" />
                     <p>
                       <strong>Last Login:</strong>{" "}
                       {selectedInstructor.lastLogin
@@ -638,51 +633,50 @@ const ManageInstructor = () => {
             </div>
           )}
 
-          {/* Desktop Table (lg and above) */}
-          <div className="hidden lg:block bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="hidden lg:block bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full">
-                <thead className="bg-gray-200">
+                <thead className="bg-gray-200 dark:bg-gray-700">
                   <tr>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">
+                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
                       <div className="flex items-center gap-2">
-                        <FaUser className="clr text-sm" />
+                        <FaUser className="text-blue-600 dark:text-blue-400 text-sm" />
                         Name
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">
+                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
                       <div className="flex items-center gap-2">
-                        <FaEnvelope className="clr text-sm" />
+                        <FaEnvelope className="text-blue-600 dark:text-blue-400 text-sm" />
                         Email
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">
+                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
                       <div className="flex items-center gap-2">
-                        <FaPhone className="clr text-sm" />
+                        <FaPhone className="text-blue-600 dark:text-blue-400 text-sm" />
                         Phone
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">
+                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
                       <div className="flex items-center gap-2">
-                        <FaCode className="clr text-sm" />
+                        <FaCode className="text-blue-600 dark:text-blue-400 text-sm" />
                         Expertise
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">
+                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
                       <div className="flex items-center gap-2">
-                        <FaBook className="clr text-sm" />
+                        <FaBook className="text-blue-600 dark:text-blue-400 text-sm" />
                         Courses
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">
+                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
                       <div className="flex items-center gap-2">
-                        <FaCheckCircle className="clr text-sm" />
+                        <FaCheckCircle className="text-blue-600 dark:text-blue-400 text-sm" />
                         Status
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">
+                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
                       <div className="flex items-center gap-2">
-                        <FaCog className="clr text-sm" />
+                        <FaCog className="text-blue-600 dark:text-blue-400 text-sm" />
                         Action
                       </div>
                     </th>
@@ -692,9 +686,9 @@ const ManageInstructor = () => {
                   {filteredInstructors.map((instructor) => (
                     <tr
                       key={instructor._id || Math.random()}
-                      className="border-b hover:bg-gray-100 transition-colors"
+                      className="border-b hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <td className="py-4 px-6 text-sm text-gray-800 font-medium">
+                      <td className="py-4 px-6 text-sm text-gray-800 dark:text-gray-200 font-medium">
                         <div className="flex items-center gap-2">
                           <img
                             src={
@@ -712,24 +706,24 @@ const ManageInstructor = () => {
                           <span>{`${instructor.firstName || "N/A"} ${instructor.lastName || "N/A"}`}</span>
                         </div>
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-600">
+                      <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
                         {instructor.email || "N/A"}
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-600">
+                      <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
                         {instructor.phone || "N/A"}
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-600">
+                      <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
                         {instructor.expertise?.join(", ") || "N/A"}
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-600">
+                      <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
                         {instructor.totalCourses || 0}
                       </td>
                       <td className="py-4 px-6 text-sm">
                         <span
                           className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
                             instructor.isActive
-                              ? "bg-green-100 text-green-800"
-                              : "bg-red-100 text-red-800"
+                              ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
+                              : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
                           }`}
                         >
                           {instructor.isActive ? "Active" : "Inactive"}
@@ -738,7 +732,7 @@ const ManageInstructor = () => {
                       <td className="py-4 px-6 text-sm">
                         <button
                           onClick={() => openDetailsPopup(instructor)}
-                          className="card-bg shadow shadow-black text-white px-3 py-1 rounded-lg hover:card-bg transition-colors text-xs"
+                          className="bg-blue-600 dark:bg-blue-700 shadow shadow-black/30 dark:shadow-black/50 text-white px-3 py-1 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-xs"
                         >
                           More
                         </button>
@@ -750,12 +744,11 @@ const ManageInstructor = () => {
             </div>
           </div>
 
-          {/* Tablet and Mobile Layout (below lg) - Card-based */}
           <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredInstructors.map((instructor) => (
               <div
                 key={instructor._id || Math.random()}
-                className="bg-white rounded-lg shadow-md p-4 sm:p-5 border border-gray-200"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-5 border border-gray-200 dark:border-gray-700"
               >
                 <div className="mb-3">
                   <div className="flex items-center space-x-3">
@@ -774,7 +767,7 @@ const ManageInstructor = () => {
                     />
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-base sm:text-lg font-semibold text-gray-800">
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
                           {`${instructor.firstName || "N/A"} ${instructor.lastName || "N/A"}`}
                         </h3>
                       </div>
@@ -782,8 +775,8 @@ const ManageInstructor = () => {
                         <span
                           className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                             instructor.isActive
-                              ? "bg-green-100 text-green-800"
-                              : "bg-red-100 text-red-800"
+                              ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
+                              : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
                           }`}
                         >
                           {instructor.isActive ? "Active" : "Inactive"}
@@ -792,34 +785,34 @@ const ManageInstructor = () => {
                     </div>
                   </div>
                 </div>
-                <div className="space-y-2 text-sm sm:text-base text-gray-600">
+                <div className="space-y-2 text-sm sm:text-base text-gray-600 dark:text-gray-300">
                   <div className="flex items-center gap-2">
-                    <FaEnvelope className="clr text-sm sm:text-base" />
+                    <FaEnvelope className="text-blue-600 dark:text-blue-400 text-sm sm:text-base" />
                     <p><strong>Email:</strong> {instructor.email || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaPhone className="clr text-sm sm:text-base" />
+                    <FaPhone className="text-blue-600 dark:text-blue-400 text-sm sm:text-base" />
                     <p><strong>Phone:</strong> {instructor.phone || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCode className="clr text-sm sm:text-base" />
+                    <FaCode className="text-blue-600 dark:text-blue-400 text-sm sm:text-base" />
                     <p>
                       <strong>Expertise:</strong>{" "}
                       {instructor.expertise?.join(", ") || "N/A"}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaBook className="clr text-sm sm:text-base" />
+                    <FaBook className="text-blue-600 dark:text-blue-400 text-sm sm:text-base" />
                     <p><strong>Courses:</strong> {instructor.totalCourses || 0}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaStar className="clr text-sm sm:text-base" />
+                    <FaStar className="text-blue-600 dark:text-blue-400 text-sm sm:text-base" />
                     <p><strong>Rating:</strong> {instructor.rating || 0}</p>
                   </div>
                   <div className="mt-3">
                     <button
                       onClick={() => openDetailsPopup(instructor)}
-                      className="card-bg text-white shadow shadow-black px-3 py-1 rounded-lg hover:card-bg transition-colors text-xs sm:text-sm"
+                      className="bg-blue-600 dark:bg-blue-700 text-white shadow shadow-black/30 dark:shadow-black/50 px-3 py-1 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-xs sm:text-sm"
                     >
                       More
                     </button>

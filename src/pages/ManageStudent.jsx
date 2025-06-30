@@ -225,541 +225,537 @@ const ManageStudent = () => {
 
     return fullName.includes(query) || email.includes(query);
   });
-// ... (Previous imports and component logic remain unchanged)
 
-// Inside the ManageStudent component, replace the JSX return statement with:
-return (
-  <div className="container mx-auto p-4 sm:p-6 bg-gray-50 min-h-screen">
-    <div className="mb-6 mt-10">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <h1 className="text-xl sm:text-3xl font-bold text-gray-800 text-left">
-          Manage Students
-        </h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="card-bg text-white shadow shadow-black px-4 py-2 rounded-lg hover:card-bg transition-colors text-sm"
-        >
-          Enroll Student
-        </button>
-      </div>
-      <div className="mt-4 flex justify-end">
-        <div className="relative w-full sm:w-64 md:w-80">
-          <input
-            type="text"
-            placeholder="Search by name or email"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-            >
-              ✕
-            </button>
-          )}
+  return (
+    <div className="container mx-auto p-4 sm:p-6 bg-gray-900 min-h-screen">
+      <div className="mb-6 mt-10">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <h1 className="text-xl sm:text-3xl font-bold text-gray-100 text-left">
+            Manage Students
+          </h1>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-blue-600 text-white shadow shadow-black px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm"
+          >
+            Enroll Student
+          </button>
+        </div>
+        <div className="mt-4 flex justify-end">
+          <div className="relative w-full sm:w-64 md:w-80">
+            <input
+              type="text"
+              placeholder="Search by name or email"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200"
+              >
+                ✕
+              </button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
 
-    {error && (
-      <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
-        {error}
-      </div>
-    )}
-    {loading ? (
-      <Loading />
-    ) : filteredStudents.length === 0 ? (
-      <div className="text-center text-gray-600">
-        {searchQuery
-          ? "No students found matching your search."
-          : "No students found."}
-      </div>
-    ) : (
-      <>
-        {isModalOpen && (
-          <div
-            className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50"
-            onClick={handleOverlayClick}
-          >
-            <div className="bg-white border-2 border-blue-400 rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto">
-              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800">
-                Enroll New Student
-              </h2>
-              {modalError && (
-                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
-                  {modalError}
-                </div>
-              )}
-              <form onSubmit={handleSubmit}>
-                {/* Form fields remain unchanged */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    required
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    required
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    required
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    required
-                    placeholder="Enter password (min 6 characters)"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Phone
-                  </label>
-                  <input
-                    type="text"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Education
-                  </label>
-                  <input
-                    type="text"
-                    name="education"
-                    value={formData.education}
-                    onChange={handleInputChange}
-                    className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Occupation
-                  </label>
-                  <input
-                    type="text"
-                    name="occupation"
-                    value={formData.occupation}
-                    onChange={handleInputChange}
-                    className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Skills (comma-separated)
-                  </label>
-                  <input
-                    type="text"
-                    name="skills"
-                    value={formData.skills || "N/A"}
-                    onChange={handleInputChange}
-                    className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    placeholder="e.g., Python, SQL"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Interests (comma-separated)
-                  </label>
-                  <input
-                    type="text"
-                    name="interests"
-                    value={formData.interests}
-                    onChange={handleInputChange}
-                    className="mt-1 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    placeholder="e.g., AI, ML"
-                  />
-                </div>
-                <div className="flex justify-end space-x-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 text-gray-600 hover:text-gray-800 text-sm"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 card-bg text-white rounded-lg hover:card-bg transition-colors text-sm"
-                  >
-                    Enroll
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
-        {selectedStudent && (
-          <div
-            className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50"
-            onClick={handleOverlayClick}
-          >
-            <div className="bg-white border-2 border-blue-400 rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto">
-              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800">
-                {`${selectedStudent.firstName || "N/A"} ${
-                  selectedStudent.lastName || "N/A"
-                }`}{" "}
-                Details
-              </h2>
-              <div className="space-y-2 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <FaUser className="clr text-sm" />
-                  <p>
-                    <strong>First Name:</strong>{" "}
-                    {selectedStudent.firstName || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaUser className="clr text-sm" />
-                  <p>
-                    <strong>Last Name:</strong>{" "}
-                    {selectedStudent.lastName || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaEnvelope className="clr text-sm" />
-                  <p>
-                    <strong>Email:</strong> {selectedStudent.email || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaPhone className="clr text-sm" />
-                  <p>
-                    <strong>Phone:</strong> {selectedStudent.phone || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaGraduationCap className="clr text-sm" />
-                  <p>
-                    <strong>Education:</strong>{" "}
-                    {selectedStudent.education || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaBriefcase className="clr text-sm" />
-                  <p>
-                    <strong>Occupation:</strong>{" "}
-                    {selectedStudent.occupation || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaCode className="clr text-sm" />
-                  <p>
-                    <strong>Skills:</strong> {selectedStudent.skills || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaHeart className="clr text-sm" />
-                  <p>
-                    <strong>Interests:</strong>{" "}
-                    {selectedStudent.interests || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaCheckCircle className="clr text-sm" />
-                  <p>
-                    <strong>Status:</strong>
-                    <span
-                      className={`inline-block px-2 py-1 ml-2 rounded-full text-xs font-medium ${
-                        selectedStudent.isActive
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {selectedStudent.isActive ? "Active" : "Inactive"}
-                    </span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaShieldAlt className="clr text-sm" />
-                  <p>
-                    <strong>Verified:</strong>{" "}
-                    {selectedStudent.isVerified ? "Yes" : "No"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaCalendarAlt className="clr text-sm" />
-                  <p>
-                    <strong>Created At:</strong>{" "}
-                    {selectedStudent.createdAt
-                      ? new Date(selectedStudent.createdAt).toLocaleString()
-                      : "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaSignInAlt className="clr text-sm" />
-                  <p>
-                    <strong>Last Login:</strong>{" "}
-                    {selectedStudent.lastLogin
-                      ? new Date(selectedStudent.lastLogin).toLocaleString()
-                      : "N/A"}
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-end mt-4 space-x-2">
-                <button
-                  onClick={() => handleToggleStatus(selectedStudent._id)}
-                  disabled={toggleLoading[selectedStudent._id]}
-                  className={`px-4 py-2 text-white rounded-lg text-sm ${
-                    selectedStudent.isActive
-                      ? "bg-red-600 hover:bg-red-700"
-                      : "bg-green-600 hover:bg-green-700"
-                  } ${
-                    toggleLoading[selectedStudent._id]
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
-                  }`}
-                >
-                  {toggleLoading[selectedStudent._id]
-                    ? "Loading..."
-                    : selectedStudent.isActive
-                    ? "Deactivate"
-                    : "Activate"}
-                </button>
-                <button
-                  onClick={() => setSelectedStudent(null)}
-                  className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Desktop Layout (lg and above) - Table */}
-        <div className="hidden lg:block bg-white rounded-lg shadow-md">
-          <div className="overflow-x-auto">
-            <table className="min-w-full table-auto">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-700 w-1/5">
-                    <div className="flex items-center gap-2">
-                      <FaUser className="clr text-sm" />
-                      Name
-                    </div>
-                  </th>
-                  <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-700 w-1/5">
-                    <div className="flex items-center gap-2">
-                      <FaEnvelope className="clr text-sm" />
-                      Email
-                    </div>
-                  </th>
-                  <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-700 w-1/5">
-                    <div className="flex items-center gap-2">
-                      <FaPhone className="clr text-sm" />
-                      Phone
-                    </div>
-                  </th>
-                  <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-700 w-1/5">
-                    <div className="flex items-center gap-2">
-                      <FaCode className="clr text-sm" />
-                      Skills
-                    </div>
-                  </th>
-                  <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-700 w-1/5">
-                    <div className="flex items-center gap-2">
-                      <FaCheckCircle className="clr text-sm" />
-                      Status
-                    </div>
-                  </th>
-                  <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-700 w-1/5">
-                    <div className="flex items-center gap-2">
-                      <FaCog className="clr text-sm" />
-                      Action
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredStudents.map((student) => (
-                  <tr
-                    key={student._id || Math.random()}
-                    className="border-b hover:bg-gray-100 transition-colors"
-                  >
-                    <td className="py-4 px-4 sm:px-6 text-sm text-gray-800 font-medium truncate">
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={
-                            student.avatar ||
-                            "https://res.cloudinary.com/dcgilmdbm/image/upload/v1747893719/default_avatar_xpw8jv.jpg"
-                          }
-                          alt="student avatar"
-                          className="w-11 h-11 rounded-full object-cover"
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src =
-                              "https://res.cloudinary.com/dcgilmdbm/image/upload/v1747893719/default_avatar_xpw8jv.jpg";
-                          }}
-                        />
-                        <span className="truncate">{`${student.firstName || "N/A"} ${
-                          student.lastName || "N/A"
-                        }`}</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 sm:px-6 text-sm text-gray-600 truncate">
-                      {student.email || "N/A"}
-                    </td>
-                    <td className="py-4 px-4 sm:px-6 text-sm text-gray-600 truncate">
-                      {student.phone || "N/A"}
-                    </td>
-                    <td className="py-4 px-4 sm:px-6 text-sm text-gray-600 truncate">
-                      {student.skills?.join(", ") || "N/A"}
-                    </td>
-                    <td className="py-4 px-4 sm:px-6 text-sm">
-                      <span
-                        className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                          student.isActive
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {student.isActive ? "Active" : "Inactive"}
-                      </span>
-                    </td>
-                    <td className="py-4 px-4 sm:px-6 text-sm">
-                      <button
-                        onClick={() => openDetailsPopup(student)}
-                        className="card-bg text-white shadow shadow-black px-3 py-1 rounded-lg hover:card-bg transition-colors text-xs"
-                      >
-                        More
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      {error && (
+        <div className="mb-4 p-3 bg-red-900 text-red-200 rounded-lg text-sm">
+          {error}
         </div>
-
-        {/* Tablet and Mobile Layout (below lg) - Card-based */}
-        <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredStudents.map((student) => (
+      )}
+      {loading ? (
+        <Loading />
+      ) : filteredStudents.length === 0 ? (
+        <div className="text-center text-gray-400">
+          {searchQuery
+            ? "No students found matching your search."
+            : "No students found."}
+        </div>
+      ) : (
+        <>
+          {isModalOpen && (
             <div
-              key={student._id || Math.random()}
-              className="bg-white rounded-lg shadow-md p-4 sm:p-5 border border-gray-200"
+              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+              onClick={handleOverlayClick}
             >
-              <div className="mb-3">
-                <div className="flex items-center space-x-3">
-                  <img
-                    src={
-                      student.avatar ||
-                      "https://res.cloudinary.com/dcgilmdbm/image/upload/v1747893719/default_avatar_xpw8jv.jpg"
-                    }
-                    alt="student avatar"
-                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src =
-                        "https://res.cloudinary.com/dcgilmdbm/image/upload/v1747893719/default_avatar_xpw8jv.jpg";
-                    }}
-                  />
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-base sm:text-lg font-semibold text-gray-800">
-                        {`${student.firstName || "N/A"} ${
-                          student.lastName || "N/A"
-                        }`}
-                      </h3>
-                    </div>
-                    <div className="flex items-center gap-2 mt-1">
+              <div className="bg-gray-800 border-2 border-blue-600 rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto">
+                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-100">
+                  Enroll New Student
+                </h2>
+                {modalError && (
+                  <div className="mb-4 p-3 bg-red-900 text-red-200 rounded-lg text-sm">
+                    {modalError}
+                  </div>
+                )}
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      className="mt-1 w-full p-2 border border-gray-700 rounded bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className="mt-1 w-full p-2 border border-gray-700 rounded bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="mt-1 w-full p-2 border border-gray-700 rounded bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      className="mt-1 w-full p-2 border border-gray-700 rounded bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      required
+                      placeholder="Enter password (min 6 characters)"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Phone
+                    </label>
+                    <input
+                      type="text"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="mt-1 w-full p-2 border border-gray-700 rounded bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Education
+                    </label>
+                    <input
+                      type="text"
+                      name="education"
+                      value={formData.education}
+                      onChange={handleInputChange}
+                      className="mt-1 w-full p-2 border border-gray-700 rounded bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Occupation
+                    </label>
+                    <input
+                      type="text"
+                      name="occupation"
+                      value={formData.occupation}
+                      onChange={handleInputChange}
+                      className="mt-1 w-full p-2 border border-gray-700 rounded bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Skills (comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      name="skills"
+                      value={formData.skills || "N/A"}
+                      onChange={handleInputChange}
+                      className="mt-1 w-full p-2 border border-gray-700 rounded bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      placeholder="e.g., Python, SQL"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Interests (comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      name="interests"
+                      value={formData.interests}
+                      onChange={handleInputChange}
+                      className="mt-1 w-full p-2 border border-gray-700 rounded bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      placeholder="e.g., AI, ML"
+                    />
+                  </div>
+                  <div className="flex justify-end space-x-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsModalOpen(false)}
+                      className="px-4 py-2 text-gray-400 hover:text-gray-200 text-sm"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                    >
+                      Enroll
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {selectedStudent && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+              onClick={handleOverlayClick}
+            >
+              <div className="bg-gray-800 border-2 border-blue-600 rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto">
+                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-100">
+                  {`${selectedStudent.firstName || "N/A"} ${
+                    selectedStudent.lastName || "N/A"
+                  }`}{" "}
+                  Details
+                </h2>
+                <div className="space-y-2 text-sm text-gray-300">
+                  <div className="flex items-center gap-2">
+                    <FaUser className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>First Name:</strong>{" "}
+                      {selectedStudent.firstName || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaUser className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Last Name:</strong>{" "}
+                      {selectedStudent.lastName || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaEnvelope className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Email:</strong> {selectedStudent.email || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaPhone className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Phone:</strong> {selectedStudent.phone || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaGraduationCap className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Education:</strong>{" "}
+                      {selectedStudent.education || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaBriefcase className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Occupation:</strong>{" "}
+                      {selectedStudent.occupation || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaCode className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Skills:</strong> {selectedStudent.skills || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaHeart className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Interests:</strong>{" "}
+                      {selectedStudent.interests || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaCheckCircle className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Status:</strong>
                       <span
-                        className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
-                          student.isActive
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
+                        className={`inline-block px-2 py-1 ml-2 rounded-full text-xs font-medium ${
+                          selectedStudent.isActive
+                            ? "bg-green-900 text-green-300"
+                            : "bg-red-900 text-red-300"
                         }`}
                       >
-                        {student.isActive ? "Active" : "Inactive"}
+                        {selectedStudent.isActive ? "Active" : "Inactive"}
                       </span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaShieldAlt className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Verified:</strong>{" "}
+                      {selectedStudent.isVerified ? "Yes" : "No"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaCalendarAlt className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Created At:</strong>{" "}
+                      {selectedStudent.createdAt
+                        ? new Date(selectedStudent.createdAt).toLocaleString()
+                        : "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaSignInAlt className="text-blue-400 text-sm" />
+                    <p>
+                      <strong>Last Login:</strong>{" "}
+                      {selectedStudent.lastLogin
+                        ? new Date(selectedStudent.lastLogin).toLocaleString()
+                        : "N/A"}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex justify-end mt-4 space-x-2">
+                  <button
+                    onClick={() => handleToggleStatus(selectedStudent._id)}
+                    disabled={toggleLoading[selectedStudent._id]}
+                    className={`px-4 py-2 text-white rounded-lg text-sm ${
+                      selectedStudent.isActive
+                        ? "bg-red-600 hover:bg-red-700"
+                        : "bg-green-600 hover:bg-green-700"
+                    } ${
+                      toggleLoading[selectedStudent._id]
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
+                  >
+                    {toggleLoading[selectedStudent._id]
+                      ? "Loading..."
+                      : selectedStudent.isActive
+                      ? "Deactivate"
+                      : "Activate"}
+                  </button>
+                  <button
+                    onClick={() => setSelectedStudent(null)}
+                    className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Desktop Layout (lg and above) - Table */}
+          <div className="hidden lg:block bg-gray-800 rounded-lg shadow-md">
+            <div className="overflow-x-auto">
+              <table className="min-w-full table-auto">
+                <thead className="bg-gray-700">
+                  <tr>
+                    <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-300 w-1/5">
+                      <div className="flex items-center gap-2">
+                        <FaUser className="text-blue-400 text-sm" />
+                        Name
+                      </div>
+                    </th>
+                    <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-300 w-1/5">
+                      <div className="flex items-center gap-2">
+                        <FaEnvelope className="text-blue-400 text-sm" />
+                        Email
+                      </div>
+                    </th>
+                    <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-300 w-1/5">
+                      <div className="flex items-center gap-2">
+                        <FaPhone className="text-blue-400 text-sm" />
+                        Phone
+                      </div>
+                    </th>
+                    <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-300 w-1/5">
+                      <div className="flex items-center gap-2">
+                        <FaCode className="text-blue-400 text-sm" />
+                        Skills
+                      </div>
+                    </th>
+                    <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-300 w-1/5">
+                      <div className="flex items-center gap-2">
+                        <FaCheckCircle className="text-blue-400 text-sm" />
+                        Status
+                      </div>
+                    </th>
+                    <th className="py-4 px-4 sm:px-6 text-left text-sm font-semibold text-gray-300 w-1/5">
+                      <div className="flex items-center gap-2">
+                        <FaCog className="text-blue-400 text-sm" />
+                        Action
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredStudents.map((student) => (
+                    <tr
+                      key={student._id || Math.random()}
+                      className="border-b border-gray-700 hover:bg-gray-700 transition-colors"
+                    >
+                      <td className="py-4 px-4 sm:px-6 text-sm text-gray-200 font-medium truncate">
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={
+                              student.avatar ||
+                              "https://res.cloudinary.com/dcgilmdbm/image/upload/v1747893719/default_avatar_xpw8jv.jpg"
+                            }
+                            alt="student avatar"
+                            className="w-11 h-11 rounded-full object-cover"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src =
+                                "https://res.cloudinary.com/dcgilmdbm/image/upload/v1747893719/default_avatar_xpw8jv.jpg";
+                            }}
+                          />
+                          <span className="truncate">{`${student.firstName || "N/A"} ${
+                            student.lastName || "N/A"
+                          }`}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 sm:px-6 text-sm text-gray-300 truncate">
+                        {student.email || "N/A"}
+                      </td>
+                      <td className="py-4 px-4 sm:px-6 text-sm text-gray-300 truncate">
+                        {student.phone || "N/A"}
+                      </td>
+                      <td className="py-4 px-4 sm:px-6 text-sm text-gray-300 truncate">
+                        {student.skills?.join(", ") || "N/A"}
+                      </td>
+                      <td className="py-4 px-4 sm:px-6 text-sm">
+                        <span
+                          className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                            student.isActive
+                              ? "bg-green-900 text-green-300"
+                              : "bg-red-900 text-red-300"
+                          }`}
+                        >
+                          {student.isActive ? "Active" : "Inactive"}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 sm:px-6 text-sm">
+                        <button
+                          onClick={() => openDetailsPopup(student)}
+                          className="bg-blue-600 text-white shadow shadow-black px-3 py-1 rounded-lg hover:bg-blue-700 transition-colors text-xs"
+                        >
+                          More
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Tablet and Mobile Layout (below lg) - Card-based */}
+          <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+            {filteredStudents.map((student) => (
+              <div
+                key={student._id || Math.random()}
+                className="bg-gray-800 rounded-lg shadow-md p-4 sm:p-5 border border-gray-700"
+              >
+                <div className="mb-3">
+                  <div className="flex items-center space-x-3">
+                    <img
+                      src={
+                        student.avatar ||
+                        "https://res.cloudinary.com/dcgilmdbm/image/upload/v1747893719/default_avatar_xpw8jv.jpg"
+                      }
+                      alt="student avatar"
+                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src =
+                          "https://res.cloudinary.com/dcgilmdbm/image/upload/v1747893719/default_avatar_xpw8jv.jpg";
+                      }}
+                    />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-100">
+                          {`${student.firstName || "N/A"} ${
+                            student.lastName || "N/A"
+                          }`}
+                        </h3>
+                      </div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span
+                          className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                            student.isActive
+                              ? "bg-green-900 text-green-300"
+                              : "bg-red-900 text-red-300"
+                          }`}
+                        >
+                          {student.isActive ? "Active" : "Inactive"}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div className="space-y-2 text-sm sm:text-base text-gray-300">
+                  <div className="flex items-center gap-2">
+                    <FaEnvelope className="text-blue-400 text-sm sm:text-base" />
+                    <p>
+                      <strong>Email:</strong> {student.email || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaPhone className="text-blue-400 text-sm sm:text-base" />
+                    <p>
+                      <strong>Phone:</strong> {student.phone || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaCode className="text-blue-400 text-sm sm:text-base" />
+                    <p>
+                      <strong>Skills: </strong>
+                      {student.skills?.join(", ") || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaGraduationCap className="text-blue-400 text-sm sm:text-base" />
+                    <p>
+                      <strong>Education: </strong>
+                      {student.education || "N/A"}
+                    </p>
+                  </div>
+                  <div className="mt-3">
+                    <button
+                      onClick={() => openDetailsPopup(student)}
+                      className="bg-blue-600 text-white shadow shadow-black px-3 py-1 rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm"
+                    >
+                      More
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="space-y-2 text-sm sm:text-base text-gray-600">
-                <div className="flex items-center gap-2">
-                  <FaEnvelope className="clr text-sm sm:text-base" />
-                  <p>
-                    <strong>Email:</strong> {student.email || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaPhone className="clr text-sm sm:text-base" />
-                  <p>
-                    <strong>Phone:</strong> {student.phone || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaCode className="clr text-sm sm:text-base" />
-                  <p>
-                    <strong>Skills: </strong>
-                    {student.skills?.join(", ") || "N/A"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaGraduationCap className="clr text-sm sm:text-base" />
-                  <p>
-                    <strong>Education: </strong>
-                    {student.education || "N/A"}
-                  </p>
-                </div>
-                <div className="mt-3">
-                  <button
-                    onClick={() => openDetailsPopup(student)}
-                    className="card-bg text-white shadow shadow-black px-3 py-1 rounded-lg hover:card-bg transition-colors text-xs sm:text-sm"
-                  >
-                    More
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </>
-    )}
-  </div>
-);
- 
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default ManageStudent;

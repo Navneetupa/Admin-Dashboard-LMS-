@@ -201,15 +201,15 @@ export default function ViewTicket() {
 
   const getStatusColor = (status) =>
     status.toLowerCase() === "resolved"
-      ? "bg-green-100 border-green-500 text-green-700"
-      : " border-red-500 text-red-700";
+      ? "bg-green-900 border-green-500 text-green-300"
+      : "bg-red-900 border-red-500 text-red-300";
 
   const getGrowthColor = (growth) =>
     growth === "N/A"
-      ? "bg-gray-100 text-gray-700 border-gray-500"
+      ? "bg-gray-700 text-gray-300 border-gray-500"
       : parseFloat(growth) > 0
-      ? "bg-green-100 text-green-700 border-green-500"
-      : "bg-red-100 text-red-700 border-red-500";
+      ? "bg-green-900 text-green-300 border-green-500"
+      : "bg-red-900 text-red-300 border-red-500";
 
   const getGrowthText = (growth) =>
     growth === "N/A" ? "N/A" : parseFloat(growth) > 0 ? `↑ ${growth}%` : `↓ ${Math.abs(growth)}%`;
@@ -241,15 +241,15 @@ export default function ViewTicket() {
   }
 
   if (error) {
-    return <div className="p-4 sm:p-6 text-gray-800 text-red-600">{error}</div>;
+    return <div className="p-4 sm:p-6 text-red-400 bg-gray-900">{error}</div>;
   }
 
   return (
-    <div className="p-4 sm:p-6 text-gray-800">
+    <div className="p-4 sm:p-6 text-gray-200 bg-gray-900 min-h-screen">
       <h1 className="text-3xl font-semibold mb-6 text-center md:text-left">Tickets & Contacts</h1>
 
       {downloadError && (
-        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+        <div className="mb-4 p-3 bg-red-800 text-red-200 rounded">
           {downloadError}
         </div>
       )}
@@ -261,17 +261,17 @@ export default function ViewTicket() {
         ].map((item, i) => (
           <div
             key={i}
-            className="card-bg rounded-xl p-6 sm:p-8 shadow relative w-full min-h-[220px]"
+            className="rounded-xl p-6 sm:p-8 shadow-lg bg-gray-800 border border-gray-700 relative w-full min-h-[220px]"
           >
-            <div className="absolute top-5 left-5 bg-white p-3 rounded-md">
+            <div className="absolute top-5 left-5 bg-gray-700 p-3 rounded-md">
               <FontAwesomeIcon
                 icon={faChartBar}
-                className="text-cyan-700 text-2xl"
+                className="text-cyan-400 text-2xl"
               />
             </div>
             <div className="flex flex-col justify-end h-full pt-12 mt-4">
-              <div className="text-gray-700 text-lg mb-1">{item.label}</div>
-              <div className="text-4xl font-bold text-black">{item.value}</div>
+              <div className="text-gray-400 text-lg mb-1">{item.label}</div>
+              <div className="text-4xl font-bold text-white">{item.value}</div>
             </div>
             {/* <div className="absolute bottom-5 right-5">
               <span
@@ -289,16 +289,16 @@ export default function ViewTicket() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
         <div className="flex items-center gap-4">
           <div>
-            <h2 className="text-xl font-medium mb-1">
+            <h2 className="text-xl font-medium mb-1 text-gray-200">
               Tickets ( {totalTickets} )
             </h2>
-            <p className="text-sm text-gray-500">View list of Complaints Below</p>
+            <p className="text-sm text-gray-400">View list of Complaints Below</p>
           </div>
           <Link
             to="/ticket-contact/all-tickets"
-            className="px-4 py-2 card-bg text-white rounded border hover:bg-cyan-600 text-sm"
+            className="px-4 py-2 bg-cyan-600 text-white rounded border border-cyan-500 hover:bg-cyan-700 text-sm"
           >
-             All Tickets
+            All Tickets
           </Link>
         </div>
         <div className="relative w-full md:w-64">
@@ -307,22 +307,22 @@ export default function ViewTicket() {
             placeholder="Search tickets by name, ID, category, or status..."
             value={ticketSearchTerm}
             onChange={(e) => setTicketSearchTerm(e.target.value)}
-            className="pl-10 pr-4 py-2 border border-cyan-500 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            className="pl-10 pr-4 py-2 border border-cyan-500 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-gray-700 text-gray-200 placeholder-gray-400"
           />
         </div>
       </div>
 
       {showResolveModal && (
-        <div className="fixed inset-0 backdrop-blur-sm bg-black/20 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h3 className="text-lg font-semibold mb-4">Resolve Ticket</h3>
+        <div className="fixed inset-0 backdrop-blur-sm bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md border border-gray-700">
+            <h3 className="text-lg font-semibold mb-4 text-gray-200">Resolve Ticket</h3>
             {resolveError && (
-              <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+              <div className="mb-4 p-3 bg-red-800 text-red-200 rounded">
                 {resolveError}
               </div>
             )}
             <textarea
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="w-full p-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-gray-700 text-gray-200 placeholder-gray-400"
               rows="4"
               value={resolutionText}
               onChange={(e) => setResolutionText(e.target.value)}
@@ -335,13 +335,13 @@ export default function ViewTicket() {
                   setResolutionText("");
                   setResolveError(null);
                 }}
-                className="px-4 py-2 bg-gray-200 text-gray-800  rounded hover:bg-gray-300"
+                className="px-4 py-2 bg-gray-600 text-gray-200 rounded hover:bg-gray-500"
               >
                 Cancel
               </button>
               <button
                 onClick={handleResolve}
-                className="px-4 py-2 card-bg border text-white rounded hover:bg-cyan-600"
+                className="px-4 py-2 bg-cyan-600 border border-cyan-500 text-white rounded hover:bg-cyan-700"
                 disabled={!resolutionText.trim()}
               >
                 Resolve
@@ -356,30 +356,30 @@ export default function ViewTicket() {
         {filteredTickets.map((t) => (
           <div
             key={t._id}
-            className="bg-white p-4 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
+            className="bg-gray-800 p-4 rounded-lg shadow-md border border-gray-700 hover:shadow-lg transition-shadow"
           >
             <div className="flex justify-between items-center mb-2">
-              <h3 className="text-base font-medium text-gray-800">{t.name}</h3>
+              <h3 className="text-base font-medium text-gray-200">{t.name}</h3>
               <button
                 onClick={() => {
                   setSelectedTicketId(t.ticketId);
                   setShowResolveModal(true);
                 }}
-                className="px-2 py-1 text-xs rounded card-bg border text-white hover:bg-cyan-600"
+                className="px-2 py-1 text-xs rounded bg-cyan-600 border border-cyan-500 text-white hover:bg-cyan-700"
               >
                 Resolve
               </button>
             </div>
-            <p className="text-sm text-gray-600 mb-1">
+            <p className="text-sm text-gray-400 mb-1">
               <span className="font-semibold">Ticket ID:</span> {t.ticketId}
             </p>
-            <p className="text-sm text-gray-600 mb-1">
+            <p className="text-sm text-gray-400 mb-1">
               <span className="font-semibold">Nature of Ticket:</span> {t.category}
             </p>
             <div className="mt-2">
               <button
                 onClick={() => handleDownload(t.ticketId)}
-                className="border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-100 flex items-center gap-2"
+                className="border border-gray-600 px-3 py-1 rounded text-sm text-gray-200 hover:bg-gray-700 flex items-center gap-2"
               >
                 <FontAwesomeIcon icon={faDownload} /> Download
               </button>
@@ -387,7 +387,7 @@ export default function ViewTicket() {
           </div>
         ))}
         {filteredTickets.length === 0 && (
-          <div className="text-center text-gray-500 py-4">
+          <div className="text-center text-gray-400 py-4">
             No unresolved tickets match your search.
           </div>
         )}
@@ -396,13 +396,12 @@ export default function ViewTicket() {
       {/* Tablet View (md to lg) */}
       <div className="hidden md:block lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
         {filteredTickets.map((t) => (
-          // console.log(t),
           <div
             key={t._id}
-            className="bg-white p-4 rounded-xl shadow-md border border-gray-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-200"
+            className="bg-gray-800 p-4 rounded-xl shadow-md border border-gray-700 hover:shadow-xl hover:-translate-y-1 transition-all duration-200"
           >
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">{t.name}</h3>
-            <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+            <h3 className="text-lg font-semibold text-gray-200 mb-2">{t.name}</h3>
+            <div className="grid grid-cols-2 gap-2 text-sm text-gray-400">
               <div>
                 <p className="font-semibold">Ticket ID:</p>
                 <p className="truncate">{t.ticketId}</p>
@@ -422,7 +421,7 @@ export default function ViewTicket() {
                     setSelectedTicketId(t.ticketId);
                     setShowResolveModal(true);
                   }}
-                  className="px-2 py-1 text-xs rounded card-bg border text-white hover:bg-cyan-600"
+                  className="px-2 py-1 text-xs rounded bg-cyan-600 border border-cyan-500 text-white hover:bg-cyan-700"
                 >
                   Resolve
                 </button>
@@ -431,7 +430,7 @@ export default function ViewTicket() {
             <div className="mt-2">
               <button
                 onClick={() => handleDownload(t.ticketId)}
-                className="border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-100 flex items-center gap-2"
+                className="border border-gray-600 px-3 py-1 rounded text-sm text-gray-200 hover:bg-gray-700 flex items-center gap-2"
               >
                 <FontAwesomeIcon icon={faDownload} /> Download
               </button>
@@ -439,16 +438,16 @@ export default function ViewTicket() {
           </div>
         ))}
         {filteredTickets.length === 0 && (
-          <div className="text-center text-gray-500 py-4 col-span-2">
+          <div className="text-center text-gray-400 py-4 col-span-2">
             No unresolved tickets match your search.
           </div>
         )}
       </div>
 
       {/* Desktop View (lg and above) */}
-      <div className="hidden lg:block bg-white rounded shadow p-4 text-black overflow-x-auto mb-4">
+      <div className="hidden lg:block bg-gray-800 rounded shadow p-4 text-gray-200 overflow-x-auto mb-4">
         <table className="min-w-full text-sm text-left whitespace-nowrap">
-          <thead className="text-black">
+          <thead className="text-gray-200">
             <tr>
               <th className="py-2 px-4">Complainant's Name</th>
               <th className="py-2 px-4">Ticket ID</th>
@@ -459,7 +458,7 @@ export default function ViewTicket() {
           </thead>
           <tbody>
             {filteredTickets.map((t) => (
-              <tr key={t._id} className="hover:bg-cyan-100">
+              <tr key={t._id} className="hover:bg-cyan-900">
                 <td className="py-2 px-4">{t.name}</td>
                 <td className="py-2 px-4">{t.ticketId}</td>
                 <td className="py-2 px-4">{t.category}</td>
@@ -469,7 +468,7 @@ export default function ViewTicket() {
                       setSelectedTicketId(t.ticketId);
                       setShowResolveModal(true);
                     }}
-                    className="px-2 py-1 text-xs rounded card-bg border text-white hover:bg-cyan-600"
+                    className="px-2 py-1 text-xs rounded bg-cyan-600 border border-cyan-500 text-white hover:bg-cyan-700"
                   >
                     Resolve
                   </button>
@@ -477,7 +476,7 @@ export default function ViewTicket() {
                 <td className="py-2 px-4">
                   <button
                     onClick={() => handleDownload(t.ticketId)}
-                    className="border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-100 flex items-center gap-2"
+                    className="border border-gray-600 px-3 py-1 rounded text-sm text-gray-200 hover:bg-gray-700 flex items-center gap-2"
                   >
                     <FontAwesomeIcon icon={faDownload} /> Download
                   </button>
@@ -486,7 +485,7 @@ export default function ViewTicket() {
             ))}
             {filteredTickets.length === 0 && (
               <tr>
-                <td colSpan="5" className="text-center text-gray-500 py-4">
+                <td colSpan="5" className="text-center text-gray-400 py-4">
                   No unresolved tickets match your search.
                 </td>
               </tr>
@@ -499,14 +498,14 @@ export default function ViewTicket() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
           <div className="flex items-center gap-4">
             <div>
-              <h2 className="text-xl font-medium mb-1">
+              <h2 className="text-xl font-medium mb-1 text-gray-200">
                 Contacts ( {contacts.length} )
               </h2>
-              <p className="text-sm text-gray-500">View list of Contact Queries Below</p>
+              <p className="text-sm text-gray-400">View list of Contact Queries Below</p>
             </div>
             <Link
               to="/ticket-contact/all-contacts"
-              className="px-4 py-2 card-bg border text-white rounded hover:bg-cyan-600 text-sm"
+              className="px-4 py-2 bg-cyan-600 border border-cyan-500 text-white rounded hover:bg-cyan-700 text-sm"
             >
               All Contacts
             </Link>
@@ -517,7 +516,7 @@ export default function ViewTicket() {
               placeholder="Search contacts by name, email, subject, query, or type..."
               value={contactSearchTerm}
               onChange={(e) => setContactSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-cyan-500 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="pl-10 pr-4 py-2 border border-cyan-500 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-gray-700 text-gray-200 placeholder-gray-400"
             />
           </div>
         </div>
@@ -527,23 +526,23 @@ export default function ViewTicket() {
           {filteredContacts.map((c) => (
             <div
               key={c._id}
-              className="bg-white p-4 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
+              className="bg-gray-800 p-4 rounded-lg shadow-md border border-gray-700 hover:shadow-lg transition-shadow"
             >
-              <h3 className="text-base font-medium text-gray-800 mb-2">{c.name}</h3>
-              <p className="text-sm text-gray-600 mb-1">
+              <h3 className="text-base font-medium text-gray-200 mb-2">{c.name}</h3>
+              <p className="text-sm text-gray-400 mb-1">
                 <span className="font-semibold">Email:</span> {c.email}
               </p>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-gray-400 mb-1">
                 <span className="font-semibold">Subject:</span> {c.subject}
               </p>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-gray-400 mb-1">
                 <span className="font-semibold">Type:</span> {c.type}
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-400">
                 <span className="font-semibold">Query:</span>{" "}
                 <span className="relative group">
                   {c.query.length > 50 ? `${c.query.substring(0, 50)}...` : c.query}
-                  <span className="absolute left-0 mt-1 p-2 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                  <span className="absolute left-0 mt-1 p-2 bg-gray-900 text-gray-200 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
                     {c.query}
                   </span>
                 </span>
@@ -551,7 +550,7 @@ export default function ViewTicket() {
             </div>
           ))}
           {filteredContacts.length === 0 && (
-            <div className="text-center text-gray-500 py-4">
+            <div className="text-center text-gray-400 py-4">
               No contacts match your search.
             </div>
           )}
@@ -562,10 +561,10 @@ export default function ViewTicket() {
           {filteredContacts.map((c) => (
             <div
               key={c._id}
-              className="bg-white p-4 rounded-xl shadow-md border border-gray-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-200"
+              className="bg-gray-800 p-4 rounded-xl shadow-md border border-gray-700 hover:shadow-xl hover:-translate-y-1 transition-all duration-200"
             >
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">{c.name}</h3>
-              <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+              <h3 className="text-lg font-semibold text-gray-200 mb-2">{c.name}</h3>
+              <div className="grid grid-cols-2 gap-2 text-sm text-gray-400">
                 <div>
                   <p className="font-semibold">Email:</p>
                   <p className="truncate">{c.email}</p>
@@ -586,16 +585,16 @@ export default function ViewTicket() {
             </div>
           ))}
           {filteredContacts.length === 0 && (
-            <div className="text-center text-gray-500 py-4 col-span-2">
+            <div className="text-center text-gray-400 py-4 col-span-2">
               No contacts match your search.
             </div>
           )}
         </div>
 
         {/* Desktop View (lg and above) */}
-        <div className="hidden lg:block bg-white rounded shadow p-4 text-black overflow-x-auto">
+        <div className="hidden lg:block bg-gray-800 rounded shadow p-4 text-gray-200 overflow-x-auto">
           <table className="min-w-full text-sm text-left whitespace-nowrap">
-            <thead className="text-black">
+            <thead className="text-gray-200">
               <tr>
                 <th className="py-2 px-4">Name</th>
                 <th className="py-2 px-4">Email</th>
@@ -606,7 +605,7 @@ export default function ViewTicket() {
             </thead>
             <tbody>
               {filteredContacts.map((c) => (
-                <tr key={c._id} className="hover:bg-cyan-100">
+                <tr key={c._id} className="hover:bg-cyan-900">
                   <td className="py-2 px-4">{c.name}</td>
                   <td className="py-2 px-4">{c.email}</td>
                   <td className="py-2 px-4">{c.subject}</td>
@@ -614,7 +613,7 @@ export default function ViewTicket() {
                   <td className="py-2 px-4">
                     <span className="relative group">
                       {c.query.length > 50 ? `${c.query.substring(0, 50)}...` : c.query}
-                      <span className="absolute left-0 mt-1 p-2 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                      <span className="absolute left-0 mt-1 p-2 bg-gray-900 text-gray-200 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
                         {c.query}
                       </span>
                     </span>
@@ -623,7 +622,7 @@ export default function ViewTicket() {
               ))}
               {filteredContacts.length === 0 && (
                 <tr>
-                  <td colSpan="5" className="text-center text-gray-500 py-4">
+                  <td colSpan="5" className="text-center text-gray-400 py-4">
                     No contacts match your search.
                   </td>
                 </tr>
