@@ -220,15 +220,16 @@ const ManageInstructor = () => {
   });
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="container mx-auto p-4 sm:p-6 min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
       <div className="mb-6 mt-10">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <h1 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-white text-left">
+          <h1 className="text-xl sm:text-3xl font-bold text-left" style={{ color: 'var(--text-color)' }}>
             Manage Instructors
           </h1>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-600 dark:bg-blue-700 text-white shadow shadow-black/30 dark:shadow-black/50 px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-sm"
+            className="px-4 py-2 rounded-lg shadow hover:opacity-90 transition-colors text-sm"
+            style={{ backgroundColor: 'var(--accent-color)', color: 'var(--text-color)', borderColor: 'var(--border-color)', borderWidth: '1px' }}
           >
             Enroll Instructor
           </button>
@@ -240,12 +241,20 @@ const ManageInstructor = () => {
               placeholder="Search by name or email"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+              style={{
+                backgroundColor: 'var(--card-bg)',
+                color: 'var(--text-color)',
+                borderColor: 'var(--border-color)',
+                borderWidth: '1px',
+                '--tw-ring-color': 'var(--accent-color)',
+              }}
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:opacity-70"
+                style={{ color: 'var(--text-color)' }}
               >
                 ✕
               </button>
@@ -263,18 +272,21 @@ const ManageInstructor = () => {
       {loading ? (
         <Loading />
       ) : filteredInstructors.length === 0 ? (
-        <div className="text-center text-gray-600 dark:text-gray-400">
+        <div className="text-center" style={{ color: 'var(--text-color)' }}>
           {searchQuery ? "No instructors found matching your search." : "No instructors found."}
         </div>
       ) : (
         <>
           {isModalOpen && (
             <div
-              className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 bg-black/30 dark:bg-black/50"
+              className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 bg-black/30"
               onClick={handleOverlayClick}
             >
-              <div className="bg-white dark:bg-gray-800 border-2 border-blue-400 dark:border-blue-600 rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto">
-                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800 dark:text-white">
+              <div
+                className="rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto"
+                style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--accent-color)', borderWidth: '2px' }}
+              >
+                <h2 className="text-lg sm:text-xl font-semibold mb-4" style={{ color: 'var(--text-color)' }}>
                   Enroll New Instructor
                 </h2>
                 {modalError && (
@@ -282,9 +294,9 @@ const ManageInstructor = () => {
                     {modalError}
                   </div>
                 )}
-                <form onSubmit={handleSubmit}>
+                <div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       First Name
                     </label>
                     <input
@@ -292,12 +304,19 @@ const ManageInstructor = () => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                       required
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       Last Name
                     </label>
                     <input
@@ -305,12 +324,19 @@ const ManageInstructor = () => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                       required
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       Email
                     </label>
                     <input
@@ -318,12 +344,19 @@ const ManageInstructor = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                       required
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       Password
                     </label>
                     <input
@@ -331,13 +364,20 @@ const ManageInstructor = () => {
                       name="password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                       required
                       placeholder="Enter password (min 6 characters)"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       Phone
                     </label>
                     <input
@@ -345,11 +385,18 @@ const ManageInstructor = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       Avatar URL
                     </label>
                     <input
@@ -357,12 +404,19 @@ const ManageInstructor = () => {
                       name="avatar"
                       value={formData.avatar}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                       placeholder="Optional image URL"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       Expertise (comma-separated)
                     </label>
                     <input
@@ -370,24 +424,38 @@ const ManageInstructor = () => {
                       name="expertise"
                       value={formData.expertise}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                       placeholder="e.g., JavaScript, React"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       Bio
                     </label>
                     <textarea
                       name="bio"
                       value={formData.bio}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                       rows="3"
                     ></textarea>
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       LinkedIn URL
                     </label>
                     <input
@@ -395,12 +463,19 @@ const ManageInstructor = () => {
                       name="socialLinks.linkedin"
                       value={formData.socialLinks.linkedin}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                       placeholder="Optional"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       Twitter URL
                     </label>
                     <input
@@ -408,19 +483,33 @@ const ManageInstructor = () => {
                       name="socialLinks.twitter"
                       value={formData.socialLinks.twitter}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                       placeholder="Optional"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       Active Status
                     </label>
                     <select
                       name="isActive"
                       value={formData.isActive}
                       onChange={handleInputChange}
-                      className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 text-sm"
+                      style={{
+                        backgroundColor: 'var(--card-bg)',
+                        color: 'var(--text-color)',
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '1px',
+                        '--tw-ring-color': 'var(--accent-color)',
+                      }}
                     >
                       <option value={true}>Active</option>
                       <option value={false}>Inactive</option>
@@ -430,50 +519,55 @@ const ManageInstructor = () => {
                     <button
                       type="button"
                       onClick={() => setIsModalOpen(false)}
-                      className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white text-sm"
+                      className="px-4 py-2 rounded text-sm"
+                      style={{ backgroundColor: 'var(--card-bg)', color: 'var(--text-color)' }}
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-sm"
+                      className="px-4 py-2 rounded text-sm"
+                      style={{ backgroundColor: 'var(--accent-color)', color: 'var(--text-color)', borderColor: 'var(--border-color)', borderWidth: '1px' }}
                     >
                       Enroll
                     </button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           )}
 
           {selectedInstructor && (
             <div
-              className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 bg-black/30 dark:bg-black/50"
+              className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 bg-black/30"
               onClick={handleOverlayClick}
             >
-              <div className="bg-white dark:bg-gray-800 border-2 border-blue-400 dark:border-blue-600 rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto">
-                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800 dark:text-white">
+              <div
+                className="rounded-lg p-4 sm:p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 max-h-[80vh] overflow-y-auto"
+                style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--accent-color)', borderWidth: '2px' }}
+              >
+                <h2 className="text-lg sm:text-xl font-semibold mb-4" style={{ color: 'var(--text-color)' }}>
                   {`${selectedInstructor.firstName || "N/A"} ${selectedInstructor.lastName || "N/A"}`} Details
                 </h2>
-                <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                <div className="space-y-2 text-sm" style={{ color: 'var(--text-color)' }}>
                   <div className="flex items-center gap-2">
-                    <FaUser className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaUser style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>First Name:</strong> {selectedInstructor.firstName || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaUser className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaUser style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Last Name:</strong> {selectedInstructor.lastName || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaEnvelope className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaEnvelope style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Email:</strong> {selectedInstructor.email || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaPhone className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaPhone style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Phone:</strong> {selectedInstructor.phone || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaImage className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaImage style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p>
                       <strong>Avatar:</strong>{" "}
                       {selectedInstructor.avatar ? (
@@ -493,22 +587,22 @@ const ManageInstructor = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCode className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaCode style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p>
                       <strong>Expertise:</strong>{" "}
                       {selectedInstructor.expertise?.join(", ") || "N/A"}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaBook className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaBook style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Total Courses:</strong> {selectedInstructor.totalCourses || 0}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaInfoCircle className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaInfoCircle style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Bio:</strong> {selectedInstructor.bio || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaLink className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaLink style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p>
                       <strong>Social:</strong>{" "}
                       {selectedInstructor.socialLinks && (selectedInstructor.socialLinks.linkedin || selectedInstructor.socialLinks.twitter) ? (
@@ -518,7 +612,8 @@ const ManageInstructor = () => {
                               href={selectedInstructor.socialLinks.linkedin}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-600 hover:underline text-xs"
+                              className="hover:underline text-xs"
+                              style={{ color: 'var(--accent-color)' }}
                             >
                               LinkedIn
                             </a>
@@ -528,7 +623,8 @@ const ManageInstructor = () => {
                               href={selectedInstructor.socialLinks.twitter}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-400 hover:underline text-xs"
+                              className="hover:underline text-xs"
+                              style={{ color: 'var(--accent-color)' }}
                             >
                               Twitter
                             </a>
@@ -540,14 +636,14 @@ const ManageInstructor = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCheckCircle className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaCheckCircle style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p>
                       <strong>Status:</strong>{" "}
                       <span
                         className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                           selectedInstructor.isActive
-                            ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
-                            : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
+                            ? "bg-green-200 dark:bg-green-900/30 text-green-900 dark:text-green-300"
+                            : "bg-red-200 dark:bg-red-900/30 text-red-900 dark:text-red-300"
                         }`}
                       >
                         {selectedInstructor.isActive ? "Active" : "Inactive"}
@@ -555,31 +651,31 @@ const ManageInstructor = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaUserTag className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaUserTag style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Role:</strong> {selectedInstructor.role || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaShieldAlt className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaShieldAlt style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Verified:</strong> {selectedInstructor.isVerified ? "Yes" : "No"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaStar className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaStar style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Rating:</strong> {selectedInstructor.rating || 0}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaUsers className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaUsers style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Total Students:</strong> {selectedInstructor.totalStudents || 0}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaDollarSign className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaDollarSign style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Earnings:</strong> ${selectedInstructor.earnings || 0}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCheck className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaCheck style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p><strong>Approved:</strong> {selectedInstructor.approved ? "Yes" : "No"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCalendarAlt className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaCalendarAlt style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p>
                       <strong>Created At:</strong>{" "}
                       {selectedInstructor.createdAt
@@ -588,7 +684,7 @@ const ManageInstructor = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCalendarAlt className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaCalendarAlt style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p>
                       <strong>Updated At:</strong>{" "}
                       {selectedInstructor.updatedAt
@@ -597,7 +693,7 @@ const ManageInstructor = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaSignInAlt className="text-blue-600 dark:text-blue-400 text-sm" />
+                    <FaSignInAlt style={{ color: 'var(--accent-color)' }} className="text-sm" />
                     <p>
                       <strong>Last Login:</strong>{" "}
                       {selectedInstructor.lastLogin
@@ -610,11 +706,12 @@ const ManageInstructor = () => {
                   <button
                     onClick={() => handleToggleStatus(selectedInstructor._id)}
                     disabled={toggleLoading[selectedInstructor._id]}
-                    className={`px-4 py-2 text-white rounded-lg text-sm ${
+                    className={`px-4 py-2 rounded text-sm ${
                       selectedInstructor.isActive
                         ? "bg-red-600 hover:bg-red-700"
                         : "bg-green-600 hover:bg-green-700"
                     } ${toggleLoading[selectedInstructor._id] ? "opacity-50 cursor-not-allowed" : ""}`}
+                    style={{ color: 'var(--text-color)' }}
                   >
                     {toggleLoading[selectedInstructor._id]
                       ? "Loading..."
@@ -624,7 +721,8 @@ const ManageInstructor = () => {
                   </button>
                   <button
                     onClick={() => setSelectedInstructor(null)}
-                    className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm"
+                    className="px-4 py-2 rounded text-sm"
+                    style={{ backgroundColor: 'var(--card-bg)', color: 'var(--text-color)', borderColor: 'var(--border-color)', borderWidth: '1px' }}
                   >
                     Close
                   </button>
@@ -633,50 +731,50 @@ const ManageInstructor = () => {
             </div>
           )}
 
-          <div className="hidden lg:block bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+          <div className="hidden lg:block rounded-lg shadow-md overflow-hidden" style={{ backgroundColor: 'var(--card-bg)' }}>
             <div className="overflow-x-auto">
               <table className="min-w-full">
-                <thead className="bg-gray-200 dark:bg-gray-700">
+                <thead style={{ backgroundColor: 'var(--card-bg)', color: 'var(--text-color)' }}>
                   <tr>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    <th className="py-4 px-6 text-left text-sm font-semibold">
                       <div className="flex items-center gap-2">
-                        <FaUser className="text-blue-600 dark:text-blue-400 text-sm" />
+                        <FaUser style={{ color: 'var(--accent-color)' }} className="text-sm" />
                         Name
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    <th className="py-4 px-6 text-left text-sm font-semibold">
                       <div className="flex items-center gap-2">
-                        <FaEnvelope className="text-blue-600 dark:text-blue-400 text-sm" />
+                        <FaEnvelope style={{ color: 'var(--accent-color)' }} className="text-sm" />
                         Email
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    <th className="py-4 px-6 text-left text-sm font-semibold">
                       <div className="flex items-center gap-2">
-                        <FaPhone className="text-blue-600 dark:text-blue-400 text-sm" />
+                        <FaPhone style={{ color: 'var(--accent-color)' }} className="text-sm" />
                         Phone
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    <th className="py-4 px-6 text-left text-sm font-semibold">
                       <div className="flex items-center gap-2">
-                        <FaCode className="text-blue-600 dark:text-blue-400 text-sm" />
+                        <FaCode style={{ color: 'var(--accent-color)' }} className="text-sm" />
                         Expertise
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    <th className="py-4 px-6 text-left text-sm font-semibold">
                       <div className="flex items-center gap-2">
-                        <FaBook className="text-blue-600 dark:text-blue-400 text-sm" />
+                        <FaBook style={{ color: 'var(--accent-color)' }} className="text-sm" />
                         Courses
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    <th className="py-4 px-6 text-left text-sm font-semibold">
                       <div className="flex items-center gap-2">
-                        <FaCheckCircle className="text-blue-600 dark:text-blue-400 text-sm" />
+                        <FaCheckCircle style={{ color: 'var(--accent-color)' }} className="text-sm" />
                         Status
                       </div>
                     </th>
-                    <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    <th className="py-4 px-6 text-left text-sm font-semibold">
                       <div className="flex items-center gap-2">
-                        <FaCog className="text-blue-600 dark:text-blue-400 text-sm" />
+                        <FaCog style={{ color: 'var(--accent-color)' }} className="text-sm" />
                         Action
                       </div>
                     </th>
@@ -686,9 +784,10 @@ const ManageInstructor = () => {
                   {filteredInstructors.map((instructor) => (
                     <tr
                       key={instructor._id || Math.random()}
-                      className="border-b hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      className="border-b hover:bg-[var(--accent-color)]/20 transition-colors"
+                      style={{ borderColor: 'var(--border-color)' }}
                     >
-                      <td className="py-4 px-6 text-sm text-gray-800 dark:text-gray-200 font-medium">
+                      <td className="py-4 px-6 text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                         <div className="flex items-center gap-2">
                           <img
                             src={
@@ -706,24 +805,24 @@ const ManageInstructor = () => {
                           <span>{`${instructor.firstName || "N/A"} ${instructor.lastName || "N/A"}`}</span>
                         </div>
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
+                      <td className="py-4 px-6 text-sm" style={{ color: 'var(--text-color)' }}>
                         {instructor.email || "N/A"}
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
+                      <td className="py-4 px-6 text-sm" style={{ color: 'var(--text-color)' }}>
                         {instructor.phone || "N/A"}
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
+                      <td className="py-4 px-6 text-sm" style={{ color: 'var(--text-color)' }}>
                         {instructor.expertise?.join(", ") || "N/A"}
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
+                      <td className="py-4 px-6 text-sm" style={{ color: 'var(--text-color)' }}>
                         {instructor.totalCourses || 0}
                       </td>
                       <td className="py-4 px-6 text-sm">
                         <span
                           className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
                             instructor.isActive
-                              ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
-                              : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
+                              ? "bg-green-200 dark:bg-green-900/30 text-green-900 dark:text-green-300"
+                              : "bg-red-200 dark:bg-red-900/30 text-red-900 dark:text-red-300"
                           }`}
                         >
                           {instructor.isActive ? "Active" : "Inactive"}
@@ -732,7 +831,8 @@ const ManageInstructor = () => {
                       <td className="py-4 px-6 text-sm">
                         <button
                           onClick={() => openDetailsPopup(instructor)}
-                          className="bg-blue-600 dark:bg-blue-700 shadow shadow-black/30 dark:shadow-black/50 text-white px-3 py-1 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-xs"
+                          className="px-3 py-1 rounded-lg text-xs"
+                          style={{ backgroundColor: 'var(--accent-color)', color: 'var(--text-color)', borderColor: 'var(--border-color)', borderWidth: '1px' }}
                         >
                           More
                         </button>
@@ -748,7 +848,8 @@ const ManageInstructor = () => {
             {filteredInstructors.map((instructor) => (
               <div
                 key={instructor._id || Math.random()}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-5 border border-gray-200 dark:border-gray-700"
+                className="rounded-lg shadow-md p-4 sm:p-5 border"
+                style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', borderWidth: '1px' }}
               >
                 <div className="mb-3">
                   <div className="flex items-center space-x-3">
@@ -767,7 +868,7 @@ const ManageInstructor = () => {
                     />
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
+                        <h3 className="text-base sm:text-lg font-semibold" style={{ color: 'var(--text-color)' }}>
                           {`${instructor.firstName || "N/A"} ${instructor.lastName || "N/A"}`}
                         </h3>
                       </div>
@@ -775,8 +876,8 @@ const ManageInstructor = () => {
                         <span
                           className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                             instructor.isActive
-                              ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
-                              : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
+                              ? "bg-green-200 dark:bg-green-900/30 text-green-900 dark:text-green-300"
+                              : "bg-red-200 dark:bg-red-900/30 text-red-900 dark:text-red-300"
                           }`}
                         >
                           {instructor.isActive ? "Active" : "Inactive"}
@@ -785,34 +886,35 @@ const ManageInstructor = () => {
                     </div>
                   </div>
                 </div>
-                <div className="space-y-2 text-sm sm:text-base text-gray-600 dark:text-gray-300">
+                <div className="space-y-2 text-sm sm:text-base" style={{ color: 'var(--text-color)' }}>
                   <div className="flex items-center gap-2">
-                    <FaEnvelope className="text-blue-600 dark:text-blue-400 text-sm sm:text-base" />
+                    <FaEnvelope style={{ color: 'var(--accent-color)' }} className="text-sm sm:text-base" />
                     <p><strong>Email:</strong> {instructor.email || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaPhone className="text-blue-600 dark:text-blue-400 text-sm sm:text-base" />
+                    <FaPhone style={{ color: 'var(--accent-color)' }} className="text-sm sm:text-base" />
                     <p><strong>Phone:</strong> {instructor.phone || "N/A"}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaCode className="text-blue-600 dark:text-blue-400 text-sm sm:text-base" />
+                    <FaCode style={{ color: 'var(--accent-color)' }} className="text-sm sm:text-base" />
                     <p>
                       <strong>Expertise:</strong>{" "}
                       {instructor.expertise?.join(", ") || "N/A"}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaBook className="text-blue-600 dark:text-blue-400 text-sm sm:text-base" />
+                    <FaBook style={{ color: 'var(--accent-color)' }} className="text-sm sm:text-base" />
                     <p><strong>Courses:</strong> {instructor.totalCourses || 0}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaStar className="text-blue-600 dark:text-blue-400 text-sm sm:text-base" />
+                    <FaStar style={{ color: 'var(--accent-color)' }} className="text-sm sm:text-base" />
                     <p><strong>Rating:</strong> {instructor.rating || 0}</p>
                   </div>
                   <div className="mt-3">
                     <button
                       onClick={() => openDetailsPopup(instructor)}
-                      className="bg-blue-600 dark:bg-blue-700 text-white shadow shadow-black/30 dark:shadow-black/50 px-3 py-1 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-xs sm:text-sm"
+                      className="px-3 py-1 rounded-lg text-xs sm:text-sm"
+                      style={{ backgroundColor: 'var(--accent-color)', color: 'var(--text-color)', borderColor: 'var(--border-color)', borderWidth: '1px' }}
                     >
                       More
                     </button>

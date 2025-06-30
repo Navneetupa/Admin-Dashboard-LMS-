@@ -77,33 +77,39 @@ function CreateCourse() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 px-4 sm:px-6 md:px-10 py-[5px]">
+    <div className="min-h-screen px-4 sm:px-6 md:px-10 py-[5px]" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
       {/* Cover Image Upload */}
-      {/* <div className="relative w-full h-48 sm:h-60 bg-gray-700 rounded-xl overflow-hidden flex items-center justify-center">
+      <div className="relative w-full h-48 sm:h-60 rounded-xl overflow-hidden flex items-center justify-center" style={{ backgroundColor: 'var(--card-bg)' }}>
         {coverImage ? (
           <img src={coverImage} alt="Cover" className="w-full h-full object-cover" />
         ) : (
-          <span className="text-gray-400 text-sm sm:text-base">Upload cover</span>
+          <span className="text-sm sm:text-base" style={{ color: 'var(--text-color)' }}>
+            Upload cover
+          </span>
         )}
-        <label className="absolute bottom-4 left-4 bg-gray-800 px-3 py-1 rounded-md text-sm cursor-pointer shadow-md hover:bg-gray-700 text-gray-200 transition">
+        <label className="absolute bottom-4 left-4 px-3 py-1 rounded-md text-sm cursor-pointer shadow-md hover:opacity-90 transition" style={{ backgroundColor: 'var(--card-bg)', color: 'var(--text-color)', borderColor: 'var(--border-color)', borderWidth: '1px' }}>
           Upload cover
           <input type="file" onChange={handleCoverChange} className="hidden" accept="image/*" />
         </label>
-      </div> */}
+      </div>
 
       {/* Course Form Container */}
-      <div className="w-full mx-auto bg-gray-800 p-4 sm:p-6 rounded-xl shadow-md">
+      <div className="w-full mx-auto p-4 sm:p-6 rounded-xl shadow-md" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', borderWidth: '1px' }}>
         {/* Tabs */}
-        <div className="flex flex-wrap sm:space-x-6 border-b border-gray-700 mt-10">
+        <div className="flex flex-wrap sm:space-x-6 border-b mt-10" style={{ borderColor: 'var(--border-color)' }}>
           {['General'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`pb-2 pr-4 sm:pr-0 border-b-2 text-sm sm:text-base cursor-pointer ${
                 activeTab === tab
-                  ? 'border-blue-500 text-blue-400 font-medium'
-                  : 'border-transparent text-gray-400 hover:text-gray-200'
+                  ? 'font-medium'
+                  : 'hover:opacity-70'
               }`}
+              style={{
+                borderColor: activeTab === tab ? 'var(--accent-color)' : 'transparent',
+                color: activeTab === tab ? 'var(--accent-color)' : 'var(--text-color)',
+              }}
             >
               {tab}
             </button>

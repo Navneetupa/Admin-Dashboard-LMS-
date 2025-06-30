@@ -22,6 +22,8 @@ import StudentActivity from './pages/TrackActivity/StudentActivity/StudentActivi
 import Setting from './pages/setting';
 import { Menu } from 'lucide-react';
 
+
+
 function AppContent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showMenuButton, setShowMenuButton] = useState(true);
@@ -80,6 +82,7 @@ function AppContent() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            
             <Route path="/manage-courses" element={<ProtectedRoute><ManageCourses /></ProtectedRoute>} />
             <Route path="/track-activities" element={<ProtectedRoute><TrackActivities /></ProtectedRoute>} />
             <Route path="/instructor-activity" element={<ProtectedRoute><InstructorActivity /></ProtectedRoute>} />

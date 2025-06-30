@@ -11,27 +11,28 @@ export default function RevenueReport() {
   const [timeframe, setTimeframe] = useState("day");
   const [revenueData, setRevenueData] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
+  const [paymentData, setPaymentData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const fetchRevenue = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
         const axiosInstance = axios.create({
-          baseURL: "https://lms-backend-flwq.onrender.com/api/v1/admin",
+          baseURL: "https://lms-backend-flwq.onrender.com/api/v1",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         });
 
-        const response = await axiosInstance.get(`/analytics/revenue?timeframe=${timeframe}`);
-        const { totalRevenue, breakdown } = response.data.data;
-
-        const formattedData = breakdown.map(item => {
+        // Fetch revenue analytics
+        const revenueRes = await axiosInstance.get(`/admin/analytics/revenue?timeframe=${timeframe}`);
+        const { totalRevenue, breakdown } = revenueRes.data.data;
+        const formattedRevenue = breakdown.map(item => {
           let timeLabel;
           const date = new Date(item.time);
           if (timeframe === "day") {
@@ -44,34 +45,40 @@ export default function RevenueReport() {
           return { time: timeLabel, revenue: item.revenue };
         });
 
-        setRevenueData(formattedData);
         setTotalRevenue(totalRevenue);
+        setRevenueData(formattedRevenue);
+
+        // Fetch payment history
+        const paymentRes = await axiosInstance.get("/payments/history");
+        const formattedPayments = paymentRes.data.data.map(item => ({
+          id: item._id,
+          user: item.user?.fullName || "N/A",
+          amount: item.amount || 0,
+          status: item.status || "Unknown",
+          date: new Date(item.createdAt).toLocaleString(),
+        }));
+        setPaymentData(formattedPayments);
+
         setLoading(false);
       } catch (error) {
-        const errorMessage =
+        const message =
           error.response?.status === 401
-            ? "Unauthorized: Please check your token or log in again."
-            : "Failed to fetch revenue data. Please try again later.";
-        setError(errorMessage);
+            ? "Unauthorized: Please log in again."
+            : "Failed to load data. Try again.";
+        setError(message);
         setLoading(false);
       }
     };
 
-    if (token) {
-      fetchRevenue();
-    } else {
-      setError("No authentication token found. Please log in.");
-      setLoading(false);
-    }
+    fetchData();
   }, [token, timeframe]);
 
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat("en-US", {
+  const formatCurrency = (value) =>
+    new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
       minimumFractionDigits: 0,
     }).format(value);
-  };
 
   if (loading) return <Loading />;
   if (error) return <div className="p-6 text-red-600 text-center">{error}</div>;
@@ -91,11 +98,11 @@ export default function RevenueReport() {
         <ArrowLeft size={20} /> Back
       </button>
 
+      {/* Revenue Chart Section */}
       <div
-        className="rounded-xl p-6 shadow-md mb-6"
+        className="rounded-xl p-6 shadow-md mb-8"
         style={{
           backgroundColor: "var(--card-bg)",
-          color: "var(--text-color)",
           border: "1px solid var(--border-color)",
         }}
       >
@@ -120,7 +127,7 @@ export default function RevenueReport() {
           ))}
         </div>
 
-        <div className="mb-8" style={{ width: "100%", height: 350 }}>
+        <div style={{ width: "100%", height: 350 }}>
           {revenueData.length > 0 ? (
             <ResponsiveContainer>
               <LineChart data={revenueData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
@@ -139,44 +146,46 @@ export default function RevenueReport() {
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <div className="flex items-center justify-center h-full text-gray-500">
-              No revenue data available for this timeframe
-            </div>
+            <div className="text-center text-gray-500">No revenue data available.</div>
           )}
         </div>
+      </div>
 
+      {/* Payment History Section */}
+      <div
+        className="rounded-xl p-6 shadow-md"
+        style={{
+          backgroundColor: "var(--card-bg)",
+          border: "1px solid var(--border-color)",
+        }}
+      >
+        <h2 className="text-xl font-bold mb-4">Payment History</h2>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full text-sm border-collapse">
             <thead>
-              <tr
-                style={{
-                  backgroundColor: "var(--card-bg)",
-                  color: "var(--text-color)",
-                }}
-              >
-                <th className="p-3 text-left rounded-tl-md border-b border-gray-400">Time</th>
-                <th className="p-3 text-left rounded-tr-md border-b border-gray-400">Revenue</th>
+              <tr className="bg-gray-200 dark:bg-gray-700">
+                <th className="p-3 text-left">Transaction ID</th>
+                <th className="p-3 text-left">User</th>
+                <th className="p-3 text-left">Amount</th>
+                <th className="p-3 text-left">Status</th>
+                <th className="p-3 text-left">Date</th>
               </tr>
             </thead>
             <tbody>
-              {revenueData.length > 0 ? (
-                revenueData.map((item, index) => (
-                  <tr
-                    key={index}
-                    className={`border-b border-gray-200 ${
-                      index % 2 === 0
-                        ? "bg-gray-100 dark:bg-gray-800"
-                        : "bg-white dark:bg-gray-900"
-                    }`}
-                  >
-                    <td className="p-3">{item.time}</td>
-                    <td className="p-3">{formatCurrency(item.revenue)}</td>
+              {paymentData.length > 0 ? (
+                paymentData.map((item) => (
+                  <tr key={item.id} className="border-b border-gray-300 dark:border-gray-700">
+                    <td className="p-3">{item.id}</td>
+                    <td className="p-3">{item.user}</td>
+                    <td className="p-3">{formatCurrency(item.amount)}</td>
+                    <td className="p-3">{item.status}</td>
+                    <td className="p-3">{item.date}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="2" className="p-3 text-center text-gray-500">
-                    No revenue data available for this timeframe
+                  <td colSpan="5" className="text-center p-4 text-gray-500">
+                    No payment data found.
                   </td>
                 </tr>
               )}
