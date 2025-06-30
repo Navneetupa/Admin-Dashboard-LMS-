@@ -19,7 +19,7 @@ import CourseEditor from './components/Instructor_createCourse_component/courseE
 import InstructorActivity from './pages/TrackActivity/InstructorActivity/InstructorActivity';
 import StudentActivity from './pages/TrackActivity/StudentActivity/StudentActivity';
 import Setting from './pages/setting';
-import Notification from './pages/Notification'; // ✅ Added Notification import
+
 import { Menu } from 'lucide-react';
 
 function AppContent() {
@@ -80,7 +80,7 @@ function AppContent() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/notifications" element={<ProtectedRoute><Notification /></ProtectedRoute>} /> {/* ✅ Added Notification route */}
+            
             <Route path="/manage-courses" element={<ProtectedRoute><ManageCourses /></ProtectedRoute>} />
             <Route path="/track-activities" element={<ProtectedRoute><TrackActivities /></ProtectedRoute>} />
             <Route path="/instructor-activity" element={<ProtectedRoute><InstructorActivity /></ProtectedRoute>} />
