@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
 } from "recharts";
 import { ArrowLeft } from "lucide-react";
 import axios from "axios";
@@ -31,14 +38,18 @@ export default function RevenueReport() {
         const res = await axiosInstance.get("/payments/history");
         const payments = res.data.data;
 
-        const formatted = payments.map((item) => ({
-          id: item._id,
-          user: `${item.student?.firstName || "N/A"} ${item.student?.lastName || ""}`,
-          amount: item.amount || 0,
-          status: item.status || "Unknown",
-          date: new Date(item.paymentDate).toLocaleString(),
-          rawDate: new Date(item.paymentDate),
-        }));
+        const formatted = payments
+          .filter((item) => item.status?.toLowerCase() !== "pending") // Filter out pending
+          .map((item) => ({
+            id: item._id,
+            user: `${item.student?.firstName || "N/A"} ${
+              item.student?.lastName || ""
+            }`,
+            amount: item.amount || 0,
+            status: item.status || "Unknown",
+            date: new Date(item.paymentDate).toLocaleString(),
+            rawDate: new Date(item.paymentDate),
+          }));
 
         setPaymentData(formatted);
         setLoading(false);
@@ -59,11 +70,14 @@ export default function RevenueReport() {
       let key = "";
 
       if (timeframe === "day") {
-        key = date.toISOString().split("T")[0]; // YYYY-MM-DD
+        key = date.toISOString().split("T")[0];
       } else if (timeframe === "month") {
-        key = date.toLocaleDateString("en-US", { month: "short", year: "numeric" }); // Jun 2025
+        key = date.toLocaleDateString("en-US", {
+          month: "short",
+          year: "numeric",
+        });
       } else if (timeframe === "year") {
-        key = date.getFullYear().toString(); // 2025
+        key = date.getFullYear().toString();
       }
 
       if (!grouped[key]) grouped[key] = 0;
@@ -86,7 +100,8 @@ export default function RevenueReport() {
     }).format(value);
 
   if (loading) return <Loading />;
-  if (error) return <div className="p-6 text-red-600 text-center">{error}</div>;
+  if (error)
+    return <div className="p-6 text-red-600 text-center">{error}</div>;
 
   return (
     <div
@@ -133,7 +148,10 @@ export default function RevenueReport() {
         <div style={{ width: "100%", height: 350 }}>
           {paymentChartData.length > 0 ? (
             <ResponsiveContainer>
-              <LineChart data={paymentChartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+              <LineChart
+                data={paymentChartData}
+                margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="time" />
                 <YAxis tickFormatter={formatCurrency} />
@@ -149,7 +167,9 @@ export default function RevenueReport() {
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <div className="text-center text-gray-500">No payment chart data available.</div>
+            <div className="text-center text-gray-500">
+              No payment chart data available.
+            </div>
           )}
         </div>
       </div>
@@ -177,7 +197,10 @@ export default function RevenueReport() {
             <tbody>
               {paymentData.length > 0 ? (
                 paymentData.map((item) => (
-                  <tr key={item.id} className="border-b border-gray-300 dark:border-gray-700">
+                  <tr
+                    key={item.id}
+                    className="border-b border-gray-300 dark:border-gray-700"
+                  >
                     <td className="p-3">{item.id}</td>
                     <td className="p-3">{item.user}</td>
                     <td className="p-3">{formatCurrency(item.amount)}</td>
