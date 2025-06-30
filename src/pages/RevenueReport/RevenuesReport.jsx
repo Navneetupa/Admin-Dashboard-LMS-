@@ -5,13 +5,12 @@ import {
 } from "recharts";
 import { ArrowLeft } from "lucide-react";
 import axios from "axios";
-import Loading from '../Loading';
+import Loading from "../Loading";
 
 export default function RevenueReport() {
-  const [timeframe, setTimeframe] = useState("day");
-  const [revenueData, setRevenueData] = useState([]);
-  const [totalRevenue, setTotalRevenue] = useState(0);
   const [paymentData, setPaymentData] = useState([]);
+  const [paymentChartData, setPaymentChartData] = useState([]);
+  const [timeframe, setTimeframe] = useState("day");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -29,54 +28,60 @@ export default function RevenueReport() {
           },
         });
 
-        // Fetch revenue analytics
-        const revenueRes = await axiosInstance.get(`/admin/analytics/revenue?timeframe=${timeframe}`);
-        const { totalRevenue, breakdown } = revenueRes.data.data;
-        const formattedRevenue = breakdown.map(item => {
-          let timeLabel;
-          const date = new Date(item.time);
-          if (timeframe === "day") {
-            timeLabel = date.toLocaleDateString("en-US", { weekday: "short" });
-          } else if (timeframe === "month") {
-            timeLabel = date.toLocaleDateString("en-US", { month: "short" });
-          } else {
-            timeLabel = item.time;
-          }
-          return { time: timeLabel, revenue: item.revenue };
-        });
+        const res = await axiosInstance.get("/payments/history");
+        const payments = res.data.data;
 
-        setTotalRevenue(totalRevenue);
-        setRevenueData(formattedRevenue);
-
-        // Fetch payment history
-        const paymentRes = await axiosInstance.get("/payments/history");
-        const formattedPayments = paymentRes.data.data.map(item => ({
+        const formatted = payments.map((item) => ({
           id: item._id,
-          user: item.user?.fullName || "N/A",
+          user: `${item.student?.firstName || "N/A"} ${item.student?.lastName || ""}`,
           amount: item.amount || 0,
           status: item.status || "Unknown",
-          date: new Date(item.createdAt).toLocaleString(),
+          date: new Date(item.paymentDate).toLocaleString(),
+          rawDate: new Date(item.paymentDate),
         }));
-        setPaymentData(formattedPayments);
 
+        setPaymentData(formatted);
         setLoading(false);
-      } catch (error) {
-        const message =
-          error.response?.status === 401
-            ? "Unauthorized: Please log in again."
-            : "Failed to load data. Try again.";
-        setError(message);
+      } catch (err) {
+        setError("Failed to fetch payment data");
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [token, timeframe]);
+  }, [token]);
+
+  useEffect(() => {
+    const grouped = {};
+
+    paymentData.forEach((item) => {
+      const date = item.rawDate;
+      let key = "";
+
+      if (timeframe === "day") {
+        key = date.toISOString().split("T")[0]; // YYYY-MM-DD
+      } else if (timeframe === "month") {
+        key = date.toLocaleDateString("en-US", { month: "short", year: "numeric" }); // Jun 2025
+      } else if (timeframe === "year") {
+        key = date.getFullYear().toString(); // 2025
+      }
+
+      if (!grouped[key]) grouped[key] = 0;
+      grouped[key] += item.amount;
+    });
+
+    const chartArray = Object.keys(grouped).map((key) => ({
+      time: key,
+      amount: grouped[key],
+    }));
+
+    setPaymentChartData(chartArray);
+  }, [paymentData, timeframe]);
 
   const formatCurrency = (value) =>
-    new Intl.NumberFormat("en-US", {
+    new Intl.NumberFormat("en-IN", {
       style: "currency",
-      currency: "USD",
+      currency: "INR",
       minimumFractionDigits: 0,
     }).format(value);
 
@@ -98,7 +103,7 @@ export default function RevenueReport() {
         <ArrowLeft size={20} /> Back
       </button>
 
-      {/* Revenue Chart Section */}
+      {/* Chart Section */}
       <div
         className="rounded-xl p-6 shadow-md mb-8"
         style={{
@@ -106,11 +111,9 @@ export default function RevenueReport() {
           border: "1px solid var(--border-color)",
         }}
       >
-        <h1 className="text-2xl font-bold mb-4">Revenue Report</h1>
-        <div className="text-lg mb-6 font-medium">
-          Total Revenue: {formatCurrency(totalRevenue)}
-        </div>
+        <h1 className="text-2xl font-bold mb-4">Payment Revenue Chart</h1>
 
+        {/* Timeframe Buttons */}
         <div className="mb-6 flex gap-4">
           {["day", "month", "year"].map((tf) => (
             <button
@@ -128,17 +131,17 @@ export default function RevenueReport() {
         </div>
 
         <div style={{ width: "100%", height: 350 }}>
-          {revenueData.length > 0 ? (
+          {paymentChartData.length > 0 ? (
             <ResponsiveContainer>
-              <LineChart data={revenueData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+              <LineChart data={paymentChartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="time" />
-                <YAxis tickFormatter={(value) => `$${value}`} />
+                <YAxis tickFormatter={formatCurrency} />
                 <Tooltip formatter={(value) => formatCurrency(value)} />
                 <Legend />
                 <Line
                   type="monotone"
-                  dataKey="revenue"
+                  dataKey="amount"
                   stroke="#14b8a6"
                   strokeWidth={3}
                   activeDot={{ r: 8 }}
@@ -146,12 +149,12 @@ export default function RevenueReport() {
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <div className="text-center text-gray-500">No revenue data available.</div>
+            <div className="text-center text-gray-500">No payment chart data available.</div>
           )}
         </div>
       </div>
 
-      {/* Payment History Section */}
+      {/* Payment History */}
       <div
         className="rounded-xl p-6 shadow-md"
         style={{

@@ -10,7 +10,7 @@ import {
   FaCog,
   FaSignOutAlt,
   FaPlusCircle,
-  FaVideo, // ✅ New icon for Live Class
+  FaBell, // ✅ Added for Notification
 } from 'react-icons/fa';
 import { Moon, Sun } from 'lucide-react';
 import { useAuth } from '../AuthContext';
@@ -88,12 +88,15 @@ export default function EnhancedSidebar({ onLinkClick }) {
           <span className="text-sm font-medium">Dashboard</span>
         </NavLink>
 
+        <NavLink to="/notifications" onClick={handleClick} className={({ isActive }) => (isActive ? `${linkClass} ${activeClass}` : linkClass)}>
+          <FaBell size={20} className="group-hover:scale-110 transition-transform" />
+          <span className="text-sm font-medium">Notifications</span>
+        </NavLink>
+
         <NavLink to="/manage-courses" onClick={handleClick} className={({ isActive }) => (isActive ? `${linkClass} ${activeClass}` : linkClass)}>
           <FaBook size={20} className="group-hover:scale-110 transition-transform" />
           <span className="text-sm font-medium">Manage Courses</span>
         </NavLink>
-
-       
 
         <NavLink to="/track-activities" onClick={handleClick} className={({ isActive }) => (isActive ? `${linkClass} ${activeClass}` : linkClass)}>
           <FaChartLine size={20} className="group-hover:scale-110 transition-transform" />
