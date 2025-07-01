@@ -32,6 +32,7 @@ const ManageInstructor = () => {
   const [modalError, setModalError] = useState("");
   const [loading, setLoading] = useState(true);
   const [toggleLoading, setToggleLoading] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -83,9 +84,11 @@ const ManageInstructor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setModalError("");
+    setIsSubmitting(true);
 
     if (!formData.password || formData.password.length < 6) {
       setModalError("Password is required and must be at least 6 characters long");
+      setIsSubmitting(false);
       return;
     }
 
@@ -106,6 +109,8 @@ const ManageInstructor = () => {
       isVerified: true,
     };
 
+    console.log("Submitting instructor data:", newInstructor);
+
     try {
       const response = await axios.post(
         "https://lms-backend-flwq.onrender.com/api/v1/admin/users/instructors",
@@ -118,6 +123,8 @@ const ManageInstructor = () => {
           timeout: 10000,
         }
       );
+      console.log("Enrollment response:", response.data);
+
       if (response.data.success && response.data.data) {
         setInstructors([response.data.data, ...instructors]);
         setIsModalOpen(false);
@@ -146,18 +153,31 @@ const ManageInstructor = () => {
         setModalError("Failed to enroll instructor: Invalid response data");
       }
     } catch (err) {
+      console.error("Enrollment error:", err.response?.data || err.message);
       const errorMessage = err.response?.data?.message || `Error enrolling instructor: ${err.message}`;
       setModalError(errorMessage.includes("email") ? "This email is already registered" : errorMessage);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleToggleStatus = async (instructorId) => {
+    if (!instructorId) {
+      setError("Invalid instructor ID");
+      return;
+    }
+
     const instructor = instructors.find((i) => i._id === instructorId);
-    if (!instructor) return setError("Instructor not found");
+    if (!instructor) {
+      setError("Instructor not found");
+      return;
+    }
 
     const newStatus = !instructor.isActive;
     setToggleLoading((prev) => ({ ...prev, [instructorId]: true }));
     setError("");
+
+    console.log("Toggling status for instructor ID:", instructorId, "to:", newStatus);
 
     try {
       const response = await axios.patch(
@@ -171,6 +191,7 @@ const ManageInstructor = () => {
           timeout: 10000,
         }
       );
+      console.log("Toggle response:", response.data);
 
       if (response.data.success && response.data.data) {
         setInstructors(
@@ -191,6 +212,7 @@ const ManageInstructor = () => {
       }
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message;
+      console.error("Toggle error:", err.response?.data || err.message);
       setError(`Error toggling instructor status: ${errorMessage}`);
     } finally {
       setToggleLoading((prev) => ({ ...prev, [instructorId]: false }));
@@ -294,7 +316,7 @@ const ManageInstructor = () => {
                     {modalError}
                   </div>
                 )}
-                <div>
+                <form onSubmit={handleSubmit}>
                   <div className="mb-4">
                     <label className="block text-sm font-medium" style={{ color: 'var(--text-color)' }}>
                       First Name
@@ -393,6 +415,7 @@ const ManageInstructor = () => {
                         borderWidth: '1px',
                         '--tw-ring-color': 'var(--accent-color)',
                       }}
+                      placeholder="Optional"
                     />
                   </div>
                   <div className="mb-4">
@@ -521,6 +544,7 @@ const ManageInstructor = () => {
                       onClick={() => setIsModalOpen(false)}
                       className="px-4 py-2 rounded text-sm"
                       style={{ backgroundColor: 'var(--card-bg)', color: 'var(--text-color)' }}
+                      disabled={isSubmitting}
                     >
                       Cancel
                     </button>
@@ -528,11 +552,12 @@ const ManageInstructor = () => {
                       type="submit"
                       className="px-4 py-2 rounded text-sm"
                       style={{ backgroundColor: 'var(--accent-color)', color: 'var(--text-color)', borderColor: 'var(--border-color)', borderWidth: '1px' }}
+                      disabled={isSubmitting}
                     >
-                      Enroll
+                      {isSubmitting ? "Enrolling..." : "Enroll"}
                     </button>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           )}
@@ -642,8 +667,8 @@ const ManageInstructor = () => {
                       <span
                         className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                           selectedInstructor.isActive
-                            ? "bg-green-200 dark:bg-green-900/30 text-green-900 dark:text-green-300"
-                            : "bg-red-200 dark:bg-red-900/30 text-red-900 dark:text-red-300"
+                            ? "bg-green-500 text-white dark:bg-green-700 dark:text-green-100"
+                            : "bg-red-500 text-white dark:bg-red-700 dark:text-red-100"
                         }`}
                       >
                         {selectedInstructor.isActive ? "Active" : "Inactive"}
@@ -821,8 +846,8 @@ const ManageInstructor = () => {
                         <span
                           className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
                             instructor.isActive
-                              ? "bg-green-200 dark:bg-green-900/30 text-green-900 dark:text-green-300"
-                              : "bg-red-200 dark:bg-red-900/30 text-red-900 dark:text-red-300"
+                              ? "bg-green-500 text-white dark:bg-green-700 dark:text-green-100"
+                              : "bg-red-500 text-white dark:bg-red-700 dark:text-red-100"
                           }`}
                         >
                           {instructor.isActive ? "Active" : "Inactive"}
@@ -876,8 +901,8 @@ const ManageInstructor = () => {
                         <span
                           className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                             instructor.isActive
-                              ? "bg-green-200 dark:bg-green-900/30 text-green-900 dark:text-green-300"
-                              : "bg-red-200 dark:bg-red-900/30 text-red-900 dark:text-red-300"
+                              ? "bg-green-500 text-white dark:bg-green-700 dark:text-green-100"
+                              : "bg-red-500 text-white dark:bg-red-700 dark:text-red-100"
                           }`}
                         >
                           {instructor.isActive ? "Active" : "Inactive"}

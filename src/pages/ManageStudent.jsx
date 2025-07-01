@@ -239,7 +239,9 @@ const ManageStudent = () => {
           </h1>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 rounded-lg shadow hover:opacity-90 transition-colors text-sm"
+            className="px-4 pywarden
+
+System: py-2 rounded-lg shadow hover:opacity-90 transition-colors text-sm"
             style={{ backgroundColor: 'var(--accent-color)', color: 'var(--text-color)', borderColor: 'var(--border-color)', borderWidth: '1px' }}
           >
             Enroll Student
@@ -559,8 +561,8 @@ const ManageStudent = () => {
                       <span
                         className={`inline-block px-2 py-1 ml-2 rounded-full text-xs font-medium ${
                           selectedStudent.isActive
-                            ? "bg-green-200 dark:bg-green-900/30 text-green-900 dark:text-green-300"
-                            : "bg-red-200 dark:bg-red-900/30 text-red-900 dark:text-red-300"
+                            ? "bg-green-500 text-white dark:bg-green-700 dark:text-green-100"
+                            : "bg-red-500 text-white dark:bg-red-700 dark:text-red-100"
                         }`}
                       >
                         {selectedStudent.isActive ? "Active" : "Inactive"}
@@ -700,8 +702,8 @@ const ManageStudent = () => {
                         <span
                           className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
                             student.isActive
-                              ? "bg-green-200 dark:bg-green-900/30 text-green-900 dark:text-green-300"
-                              : "bg-red-200 dark:bg-red-900/30 text-red-900 dark:text-red-300"
+                              ? "bg-green-500 text-white dark:bg-green-700 dark:text-green-100"
+                              : "bg-red-500 text-white dark:bg-red-700 dark:text-red-100"
                           }`}
                         >
                           {student.isActive ? "Active" : "Inactive"}
@@ -755,8 +757,8 @@ const ManageStudent = () => {
                         <span
                           className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                             student.isActive
-                              ? "bg-green-200 dark:bg-green-900/30 text-green-900 dark:text-green-300"
-                              : "bg-red-200 dark:bg-red-900/30 text-red-900 dark:text-red-300"
+                              ? "bg-green-500 text-white dark:bg-green-700 dark:text-green-100"
+                              : "bg-red-500 text-white dark:bg-red-700 dark:text-red-100"
                           }`}
                         >
                           {student.isActive ? "Active" : "Inactive"}
